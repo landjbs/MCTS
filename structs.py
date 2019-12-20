@@ -20,21 +20,22 @@ class Board(object):
                             will be covered except for edge paths.
         '''
         self.size = size
+        self.max = size - 1
         self.board = np.zeros((size, size, 3))
         # add walls
         if (p == 0):
             pass
         elif (p == 1):
-            self.board[1:size-1, 1:size-1, 1] = 1
+            self.board[1:self.max, 1:self.max, 1] = 1
         elif (0 < p < 1):
-            coverNum = floor(p * (size-1)**2)
-            xCover = np.random.randint(1, size-1, coverNum)
-            yCover = np.random.randint(1, size-1, coverNum)
+            coverNum = floor(p * (self.max)**2)
+            xCover = np.random.randint(1, self.max, coverNum)
+            yCover = np.random.randint(1, self.max, coverNum)
             self.board[yCover, xCover, 1] = 1
         else:
             raise ValueError(f'Expected p in range [0, 1], but found {p}.')
         # add players
-        self.board[[0,size-1], [0, size-1], 2] = 1
+        self.board[[0, self.max], [0, self.max], 2] = 1
 
     def move_player(self, newLoc, prevLoc):
         ''' Lossily moves player from prevLoc to newLoc '''
@@ -50,17 +51,20 @@ class Board(object):
         hitting a wall.
         '''
         if (d == 0):
-            sliceList = list(self.board[start[0]:0, start[1], 1])
-            firstWall = sliceList.index(0)
+            sliceList = list(self.board[0:start[0], start[1], 1])
+            print(sliceList)
+            firstWall = sliceList.index(1)
             self.board[firstWall:start[0], start[1], 1] = 1
         elif (d == 1):
             sliceList = list(self.board[start[0]:0, start[1], 1])
             firstWall = sliceList.index(0)
             self.board[firstWall:start[0], start[1], 1] = 1
         elif (d == 2):
-            'down'
+            sliceList = list(self.board[self.size:start[0], start[1], 1])
+            firstWall = sliceList.index(0)
+            self.board[start[0]:firstWall, start[1], 1] = 1
         elif (d == 3):
-            'left'
+            pass
         else:
             raise ValueError(f'Expected d in range [0, 3], but found {d}.')
 
@@ -73,4 +77,5 @@ class Board(object):
 
 
 x = Board(10, 0)
+x.add_shot((9,9), 0)
 x.vis()
