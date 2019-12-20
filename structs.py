@@ -55,10 +55,10 @@ class Board(object):
             sliceList = list(self.board[:start[0], start[1], 1])
             sliceList.reverse()
             try:
-                wallDist = sliceList.index(1)
+                wallDist = sliceList.index(1) + 1
             except ValueError:
-                wallDist = self.max
-            stop = max(0, start[0]-(wallDist+1))
+                wallDist = self.size
+            stop = max(0, start[0]-wallDist)
             self.board[stop:start[0], start[1], 0] = 1
         elif (d == 1):
             sliceList = list(self.board[start[0], start[1]:, 1])
@@ -66,18 +66,24 @@ class Board(object):
                 wallDist = sliceList.index(1) + 1
             except ValueError:
                 wallDist = self.size
-            self.board[start[0], (start[1]+1):wallDist, 0] = 1
+            stop = start[1] + wallDist
+            self.board[start[0], (start[1]+1):stop, 0] = 1
         elif (d == 2):
             sliceList = list(self.board[start[0]:, start[1], 1])
             try:
                 wallDist = sliceList.index(1) + 1
             except ValueError:
                 wallDist = self.size
-            stop = min(self.size, start[0]+wallDist)
+            stop = start[0]+wallDist
             self.board[(start[0]+1):stop, start[1], 0] = 1
         elif (d == 3):
             sliceList = list(self.board[:start[0], start[1], 1])
-            
+            sliceList.reverse()
+            try:
+                wallDist = sliceList.index(1) + 1
+            except ValueError:
+                wallDist = self.size
+            stop = max(0 , start[1]-wallDist)
         else:
             raise ValueError(f'Expected d in range [0, 3], but found {d}.')
 
