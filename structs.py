@@ -18,10 +18,17 @@ class Board(object):
         '''
         self.board = np.zeros((size, size, 3))
         # add walls
-        coverNum = floor(coverPercent * (size-1)**2)
-        xCover = np.random.randint(1, size-1, coverNum)
-        yCover = np.random.randint(1, size-1, coverNum)
-        self.board[xCover, yCover, 1] = 1
+        if coverPercent == 0:
+            pass
+        elif coverPercent == 1:
+            self.board[1:size-1, 1:size-1, 1] = 1
+        elif 0 < coverPercent < 1:
+            coverNum = floor(coverPercent * (size-1)**2)
+            xCover = np.random.randint(1, size-1, coverNum)
+            yCover = np.random.randint(1, size-1, coverNum)
+            self.board[xCover, yCover, 1] = 1
+        else:
+            raise ValueError('coverPercent must be in range [0, 1]')
         # add players
         self.board[[0,size-1], [0, size-1], 2] = 1
 
