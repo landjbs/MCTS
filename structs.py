@@ -32,7 +32,7 @@ class Board(object):
         # add players
         self.board[[0,size-1], [0, size-1], 2] = 1
 
-    def visualize(self, show=True, outPath=False):
+    def vis(self, show=True, outPath=False):
         plt.imshow(self.board)
         if outPath:
             plt.savefig(outPath)
