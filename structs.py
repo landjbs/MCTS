@@ -35,18 +35,21 @@ class Board(object):
         # add players
         self.board[[0,size-1], [0, size-1], 2] = 1
 
-    def move_player(newLoc, prevLoc):
+    def move_player(self, newLoc, prevLoc):
         ''' Lossily moves player from prevLoc to newLoc '''
         self.board[prevLoc[0], prevLoc[1], 2] = 0
         self.board[newLoc[0], newLoc[1], 2] = 1
 
-    def add_shot(start, d):
+    # def calc_shot_len(self, )
+
+    def add_shot(self, start, d):
         '''
-        Adds shot from startLoc in straight line in direction d. Directions are
+        Adds shot from start in straight line in direction d. Directions are
         0 - up, 1 - right, 2 - down, 3 - left. Go as far as they can before
         hitting a wall.
         '''
         if (d == 0):
+            shotEnd = max()
             'up'
         elif (d == 1):
             'right'
