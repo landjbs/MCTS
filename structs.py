@@ -9,7 +9,9 @@ class Player(object):
 class Board(object):
     def __init__(self, size, coverPercent):
         '''
-        Builds board object
+        Builds board object for laser tag. Stored as third order tensor of shape
+        (size, size, 3) where last three dims correspond to shots, walls,
+        and players, in that order.
         Args:
             size:           Length of one axis of square board
             coverPercent:   APPROX wall cover percent of board. Does not account
@@ -39,5 +41,6 @@ class Board(object):
         if show:
             plt.show()
 
-x = Board(10, 1)
-x.visualize()
+
+x = Board(10, 0)
+x.vis()
