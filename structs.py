@@ -40,9 +40,16 @@ class Board(object):
         self.board[prevLoc[0], prevLoc[1], 2] = 0
         self.board[newLoc[0], newLoc[1], 2] = 1
 
-    def add_shot(slice, isX):
-        ''' Adds shot to board at slice on x if isX else slice on y '''
-        
+    def add_shot(start, d):
+        '''
+        Adds shot from startLoc in straight line in direction d. Directions are
+        0 - up, 1 - right, 2 - down, 3 - left. Go as far as they can before
+        hitting a wall.
+        '''
+        if isX:
+            self.board[]
+        else:
+            self.board
 
     def vis(self, show=True, outPath=False):
         plt.imshow(self.board)
