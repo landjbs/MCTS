@@ -68,7 +68,11 @@ class Board(object):
                 wallDist = self.size
             self.board[start[0], (start[1]+1):wallDist, 0] = 1
         elif (d == 2):
-            pass
+            sliceList = list(self.board[start[0]:, start[1], 1])
+            try:
+                wallDist = sliceList.index(1)
+            except ValueError:
+                wallDist = self.max
         elif (d == 3):
             pass
         else:
