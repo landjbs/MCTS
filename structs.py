@@ -84,6 +84,7 @@ class Board(object):
             except ValueError:
                 wallDist = self.size
             stop = max(0 , start[1]-wallDist)
+            self.board[start[0], stop:start[1], 1] = 1
         else:
             raise ValueError(f'Expected d in range [0, 3], but found {d}.')
 
