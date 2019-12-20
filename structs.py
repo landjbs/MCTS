@@ -62,13 +62,11 @@ class Board(object):
             self.board[stop:start[0], start[1], 0] = 1
         elif (d == 1):
             sliceList = list(self.board[start[0], start[1]:, 1])
-            sliceList.reverse()
             try:
-                wallDist = sliceList.index(1)
+                wallDist = sliceList.index(1) + 1
             except ValueError:
-                wallDist = self.max
-            stop = max(0, start[1]-(wallDist+1))
-            self.board[start[1], start[1]:stop, 0] = 1
+                wallDist = self.size
+            self.board[start[0], (start[1]+1):wallDist, 0] = 1
         elif (d == 2):
             pass
         elif (d == 3):
@@ -85,5 +83,5 @@ class Board(object):
 
 
 x = Board(10, 0.3)
-x.add_shot((0,0), 1)
+x.add_shot((-1,0), 1)
 x.vis()
