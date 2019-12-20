@@ -19,6 +19,7 @@ class Board(object):
                             for repetition. If p is 1, entire board
                             will be covered except for edge paths.
         '''
+        self.size = size
         self.board = np.zeros((size, size, 3))
         # add walls
         if (p == 0):
@@ -29,7 +30,7 @@ class Board(object):
             coverNum = floor(p * (size-1)**2)
             xCover = np.random.randint(1, size-1, coverNum)
             yCover = np.random.randint(1, size-1, coverNum)
-            self.board[xCover, yCover, 1] = 1
+            self.board[yCover, xCover, 1] = 1
         else:
             raise ValueError(f'Expected p in range [0, 1], but found {p}.')
         # add players
@@ -49,10 +50,13 @@ class Board(object):
         hitting a wall.
         '''
         if (d == 0):
-            shotEnd = max()
-            'up'
+            sliceList = list(self.board[start[0]:0, start[1], 1])
+            firstWall = sliceList.index(0)
+            self.board[firstWall:start[0], start[1], 1] = 1
         elif (d == 1):
-            'right'
+            sliceList = list(self.board[start[0]:0, start[1], 1])
+            firstWall = sliceList.index(0)
+            self.board[firstWall:start[0], start[1], 1] = 1
         elif (d == 2):
             'down'
         elif (d == 3):
