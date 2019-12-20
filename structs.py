@@ -40,6 +40,10 @@ class Board(object):
         self.board[prevLoc[0], prevLoc[1], 2] = 0
         self.board[newLoc[0], newLoc[1], 2] = 1
 
+    def add_shot(slice, isX):
+        ''' Adds shot to board at slice on x if isX else slice on y '''
+        
+
     def vis(self, show=True, outPath=False):
         plt.imshow(self.board)
         if outPath:
