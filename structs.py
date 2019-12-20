@@ -52,8 +52,10 @@ class Board(object):
         '''
         if (d == 0):
             sliceList = list(self.board[0:start[0], start[1], 1])
-            print(sliceList)
-            firstWall = sliceList.index(1)
+            try:
+                firstWall = sliceList.index(1)
+            except ValueError:
+                firstWall = 0
             self.board[firstWall:start[0], start[1], 1] = 1
         elif (d == 1):
             sliceList = list(self.board[start[0]:0, start[1], 1])
