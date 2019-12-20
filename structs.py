@@ -42,7 +42,8 @@ class Board(object):
         self.board[prevLoc[0], prevLoc[1], 2] = 0
         self.board[newLoc[0], newLoc[1], 2] = 1
 
-    # def calc_shot_len(self, )
+    def clear_shots(self):
+        self.board[:, :, 0] = 0
 
     def add_shot(self, start, d):
         '''
@@ -52,15 +53,15 @@ class Board(object):
         '''
         if (d == 0):
             sliceList = list(self.board[0:start[0], start[1], 1])
+            sliceList.reverse()
             try:
-                firstWall = sliceList.index(1)
+                wallDist = sliceList.index(1)
             except ValueError:
-                firstWall = 0
-            self.board[firstWall:start[0], start[1], 1] = 1
+                wallDist = self.max
+            stop = max(0, start[0]-(wallDist+1))
+            self.board[stop:start[0], start[1], 0] = 1
         elif (d == 1):
-            sliceList = list(self.board[start[0]:0, start[1], 1])
-            firstWall = sliceList.index(0)
-            self.board[firstWall:start[0], start[1], 1] = 1
+            pass
         elif (d == 2):
             sliceList = list(self.board[self.size:start[0], start[1], 1])
             firstWall = sliceList.index(0)
@@ -78,6 +79,6 @@ class Board(object):
             plt.show()
 
 
-x = Board(10, 0)
-x.add_shot((9,9), 0)
+x = Board(10, 0.3)
+x.add_shot((9,8), 0)
 x.vis()
