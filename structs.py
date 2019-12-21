@@ -44,7 +44,7 @@ class Player(object):
 
     def is_shot(self, board):
         ''' Player checks if it is on laser '''
-        return (board[self.y, self.x, 0] == 1)
+        return (board.board[self.y, self.x, 0] == 1)
 
     def choose_move(self, board):
         moveList = self.possible_moves(board)
@@ -52,7 +52,7 @@ class Player(object):
         return moveChoice
 
     def choose_shot(self, board):
-        shotChoice = self.controller.choose_move(board)
+        shotChoice = self.controller.choose_shot(board)
         return shotChoice
 
 
@@ -168,9 +168,9 @@ class Board(object):
 
 class Game(object):
     def __init__(self, boardSize, cp, train=True):
-        self.p1 = Player('p1', 0, 0)
-        self.p2 = Player('p2', boardSize-1, boardSize-1)
-        self.board = Board(boardSize, [p1, p2], cp)
+        self.p1 = Player('p1', 0, 0, Bot())
+        self.p2 = Player('p2', boardSize-1, boardSize-1, Bot())
+        self.board = Board(boardSize, [self.p1, self.p2], cp)
         self.roundCount = 0
 
     def player_turn(self, p):
@@ -194,24 +194,35 @@ class Game(object):
         # else:
         #     pass
         print(f'{p.name} is the winner!')
-        break
 
-    def round(self):
+    def play_round(self):
+        ''' Plays round returns true if done '''
         if not self.player_turn(self.p1):
             self.win(self.p2)
+            return True
         if not self.player_turn(self.p2):
             self.win(self.p1)
+            return True
         self.roundCount += 1
+        return False
+
+    def play(self, maxRound=10):
+        for i in range(maxRound):
+            self.board.vis()
+            if self.play_round():
+                break
 
 
+x = Game(10, 0.1)
+x.play(10)
 
-p1 = Player('derek', 0, 0, Bot())
-p2 = Player('landon', 10, 10, Bot())
-x = Board(11, [p1, p2], 1)
-x.vis()
-for i in range(10):
-    mL = p.possible_moves(x)
-    print(mL)
-    m = mL[np.random.randint(0, len(mL))]
-    p.move(m[0], m[1], x)
-    x.vis()
+# p1 = Player('derek', 0, 0, Bot())
+# p2 = Player('landon', 10, 10, Bot())
+# x = Board(11, [p1, p2], 1)
+# x.vis()
+# for i in range(10):
+#     mL = p.possible_moves(x)
+#     print(mL)
+#     m = mL[np.random.randint(0, len(mL))]
+#     p.move(m[0], m[1], x)
+#     x.vis()
