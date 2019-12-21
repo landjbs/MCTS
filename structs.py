@@ -9,9 +9,12 @@ class Player(object):
         self.y = y
 
     def move(self, nX, nY, board):
+        board.move_player((nX, nY), (self.x, self.y))
         self.x = nX
         self.y = nY
 
+    def shoot(self, d, board):
+        board.add_shot(self.x, self.y, d)
 
 class Board(object):
     def __init__(self, size, p):
