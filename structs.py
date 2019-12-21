@@ -9,7 +9,8 @@ class Player(object):
         self.x = x
         self.y = y
 
-    def move(self, nX, nY, board):
+    def move(self, dx, dy, board):
+        nX, nY = self.x + dx, self.y + dy
         board.move_player((nY, nX), (self.y, self.x))
         self.x = nX
         self.y = nY
@@ -129,7 +130,7 @@ class Board(object):
 
 
 x = Board(11, 0.1)
-p = Player('derek', 0, 0)
+p = Player('derek', x.max, x.max)
 # p.move(1, 0, x)
 print(p.possible_moves(x))
 x.vis()
