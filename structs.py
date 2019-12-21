@@ -9,12 +9,15 @@ class Player(object):
         self.y = y
 
     def move(self, nX, nY, board):
-        board.move_player((nX, nY), (self.x, self.y))
+        board.move_player((nY, nX), (self.y, self.x))
         self.x = nX
         self.y = nY
 
     def shoot(self, d, board):
-        board.add_shot(self.x, self.y, d)
+        board.add_shot((self.y, self.x), d)
+
+    def possible_moves(self, board):
+        localKernel = self.board[(self.x-1):(self.x+1), ]
 
 class Board(object):
     def __init__(self, size, p):
