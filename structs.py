@@ -3,8 +3,15 @@ from math import floor
 import matplotlib.pyplot as plt
 
 class Player(object):
-    def __init__(self, name):
-        pass
+    def __init__(self, name, x, y):
+        self.name = name
+        self.x = x
+        self.y = y
+
+    def move(self, nX, nY):
+        self.x = nX
+        self.y = nY
+
 
 class Board(object):
     def __init__(self, size, p):
