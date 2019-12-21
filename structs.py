@@ -77,14 +77,14 @@ class Board(object):
             stop = start[0]+wallDist
             self.board[(start[0]+1):stop, start[1], 0] = 1
         elif (d == 3):
-            sliceList = list(self.board[:start[0], start[1], 1])
+            sliceList = list(self.board[start[0], :start[1], 1])
             sliceList.reverse()
             try:
                 wallDist = sliceList.index(1) + 1
             except ValueError:
                 wallDist = self.size
             stop = max(0 , start[1]-wallDist)
-            self.board[start[0], stop:start[1], 1] = 1
+            self.board[start[0], stop:start[1], 0] = 1
         else:
             raise ValueError(f'Expected d in range [0, 3], but found {d}.')
 
@@ -96,6 +96,9 @@ class Board(object):
             plt.show()
 
 
-x = Board(10, 0.3)
-x.add_shot((0, 9), 2)
+x = Board(11, 0.1)
 x.vis()
+# x.move_player((5,5), (0,0))
+# for i in range(4):
+#     x.add_shot((5, 5), i)
+#     x.vis()
