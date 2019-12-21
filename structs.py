@@ -14,6 +14,13 @@ class Bot():
     def __init__(self):
         pass
 
+    def choose_move(self, moveList, board):
+        i = np.random.randint(0, len(moveList))
+        return moveList[i]
+
+    def choose_shot(self, board):
+        i = np.random.randint(0, 5)
+        return [None, 0, 1, 2, 3][i]
 
 class Player(object):
     ''' Base player class to be inherited by Human and Bot '''
@@ -40,10 +47,13 @@ class Player(object):
         return (board[self.y, self.x, 0] == 1)
 
     def choose_move(self, board):
-        pass
+        moveList = self.possible_moves(board)
+        moveChoice = self.controller.choose_move(moveList, board)
+        return moveChoice
 
     def choose_shot(self, board):
-        pass
+        shotChoice = self.controller.choose_move(board)
+        return shotChoice
 
 
 class Board(object):
@@ -183,7 +193,7 @@ class Game(object):
         #     break
         # else:
         #     pass
-        print(f'{p.name} is the winner'1)
+        print(f'{p.name} is the winner!')
         break
 
     def round(self):
