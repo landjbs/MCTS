@@ -98,8 +98,8 @@ class Board(object):
         minX, maxX = max(0, x-1), min(self.max, x+2)
         minY, maxY = max(0, y-1), min(self.max, y+2)
         kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=2)
-        plt.imshow(kernel)
-        plt.show()
+        # plt.imshow(kernel)
+        # plt.show()
         posMoves = list()
         for i, row in enumerate(kernel):
             for j, elt in enumerate(row):
@@ -183,6 +183,7 @@ class Game(object):
         p.move(move[0], move[1], self.board)
         shot = p.choose_shot(self.board)
         if shot:
+            print(p.name)
             p.shoot(shot, self.board)
         return True
 
@@ -204,17 +205,18 @@ class Game(object):
             self.win(self.p1)
             return True
         self.roundCount += 1
+        self.board.clear_shots()
+        self.board.vis()
         return False
 
     def play(self, maxRound=10):
         for i in range(maxRound):
-            self.board.vis()
             if self.play_round():
                 break
 
 
 x = Game(10, 0.1)
-x.play(10)
+x.play(100)
 
 # p1 = Player('derek', 0, 0, Bot())
 # p2 = Player('landon', 10, 10, Bot())
