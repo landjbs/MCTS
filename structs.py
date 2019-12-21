@@ -57,12 +57,13 @@ class Board(object):
         x, y = loc
         minX, maxX = max(0, x-1), min(self.max, x+2)
         minY, maxY = max(0, y-1), min(self.max, y+2)
-        kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=1)
+        kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=0)
         posMoves = set()
         for i, row in enumerate(kernel):
             for j, elt in enumerate(row):
                 if (elt == 0):
-        return kernel
+                    posMoves.add((j, i))
+        return posMoves
 
     def move_player(self, newLoc, prevLoc):
         ''' Lossily moves player from prevLoc to newLoc '''
@@ -129,6 +130,6 @@ class Board(object):
 
 x = Board(11, 0.1)
 p = Player('derek', 0, 0)
-p.move(1, 0, x)
-x.vis()
+# p.move(1, 0, x)
 print(p.possible_moves(x))
+x.vis()
