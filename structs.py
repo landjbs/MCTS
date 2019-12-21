@@ -18,8 +18,7 @@ class Player(object):
         board.add_shot((self.y, self.x), d)
 
     def possible_moves(self, board):
-        localKernel = board.board[(self.y-1):(self.y+1), (self.x-1):(self.x+1)]
-        print(localKernel)
+        return board.get_moves((self.x, self.y))
 
 
 class Board(object):
@@ -55,7 +54,15 @@ class Board(object):
 
     def get_moves(self, loc):
         ''' Returns list of possible moves at loc '''
-        self.board
+        x, y = loc
+        minX, maxX = max(0, x-1), min(self.max, x+2)
+        minY, maxY = max(0, y-1), min(self.max, y+2)
+        kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=1)
+        posMoves = set()
+        for i, row in enumerate(kernel):
+            for j, elt in enumerate(row):
+                if (elt == 0):
+        return kernel
 
     def move_player(self, newLoc, prevLoc):
         ''' Lossily moves player from prevLoc to newLoc '''
@@ -122,13 +129,6 @@ class Board(object):
 
 x = Board(11, 0.1)
 p = Player('derek', 0, 0)
-p.shoot(2, x)
-# x.vis()
-x.clear_shots()
 p.move(1, 0, x)
-# x.vis()
+x.vis()
 print(p.possible_moves(x))
-# x.move_player((5,5), (0,0))
-# for i in range(4):
-#     x.add_shot((5, 5), i)
-#     x.vis()
