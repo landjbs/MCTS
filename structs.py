@@ -42,6 +42,9 @@ class Player(object):
     def choose_move(self, board):
         pass
 
+    def choose_shot(self, board):
+        pass
+
 
 class Board(object):
     def __init__(self, size, players, cp):
@@ -164,11 +167,24 @@ class Game(object):
         ''' Runs turn for player p. Returns False if they are dead. '''
         if p.is_shot(self.board):
             return False
-        m = p.choose_move(self.board)
-        if not m:
+        move = p.choose_move(self.board)
+        if not move:
             return False
-        p.choose_shoot(self.board)
+        p.move(move[0], move[1], self.board)
+        shot = p.choose_shot(self.board)
+        if shot:
+            p.shoot(shot, self.board)
         return True
+
+    def win(self, p):
+        ''' Gives winning conditions to player '''
+        # if isinstance(p.controller, Bot):
+        #     pass
+        #     break
+        # else:
+        #     pass
+        print(f'{p.name} is the winner'1)
+        break
 
     def round(self):
         if not self.player_turn(self.p1):
