@@ -158,6 +158,7 @@ class Game(object):
         self.p1 = Player('p1', 0, 0)
         self.p2 = Player('p2', boardSize-1, boardSize-1)
         self.board = Board(boardSize, [p1, p2], cp)
+        self.roundCount = 0
 
     def player_turn(self, p):
         ''' Runs turn for player p. Returns False if they are dead. '''
@@ -168,6 +169,13 @@ class Game(object):
             return False
         p.choose_shoot(self.board)
         return True
+
+    def round(self):
+        if not self.player_turn(self.p1):
+            self.win(self.p2)
+        if not self.player_turn(self.p2):
+            self.win(self.p1)
+        self.roundCount += 1
 
 
 
