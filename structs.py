@@ -3,12 +3,25 @@ from math import floor
 import matplotlib.pyplot as plt
 
 
+class Human():
+    ''' Human-controlled player for game api # TODO: finish '''
+    def __init__(self):
+        pass
+
+
+class Bot():
+    ''' Bot-controlled player that learns across games '''
+    def __init__(self):
+        pass
+
+
 class Player(object):
-    ''' Base player class to be inherited by Human_Player and Bot '''
-    def __init__(self, name, x, y, bot):
+    ''' Base player class to be inherited by Human and Bot '''
+    def __init__(self, name, x, y, controller):
         self.name = name
         self.x = x
         self.y = y
+        self.controller = controller
 
     def move(self, dx, dy, board):
         nX, nY = self.x + dx, self.y + dy
@@ -25,6 +38,9 @@ class Player(object):
     def is_shot(self, board):
         ''' Player checks if it is on laser '''
         return (board[self.y, self.x, 0] == 1)
+
+    def choose_move(self, board):
+        pass
 
 
 class Board(object):
@@ -143,19 +159,25 @@ class Game(object):
         self.p2 = Player('p2', boardSize-1, boardSize-1)
         self.board = Board(boardSize, [p1, p2], cp)
 
-    def turn(self):
+    def player_turn(self, p):
+        ''' Runs turn for player p. Returns False if they are dead. '''
+        if p.is_shot(self.board):
+            return False
+        m = p.choose_move(self.board)
+        if not m:
+            return False
+        p.choose_shoot(self.board)
+        return True
 
-        self.p1.choose_move(self.board)
 
 
-
-p1 = Player('derek', 0, 0)
-p2 = Player('landon', 10, 10)
+p1 = Player('derek', 0, 0, Bot())
+p2 = Player('landon', 10, 10, Bot())
 x = Board(11, [p1, p2], 1)
 x.vis()
-# for i in range(10):
-#     mL = p.possible_moves(x)
-#     print(mL)
-#     m = mL[np.random.randint(0, len(mL))]
-#     p.move(m[0], m[1], x)
-#     x.vis()
+for i in range(10):
+    mL = p.possible_moves(x)
+    print(mL)
+    m = mL[np.random.randint(0, len(mL))]
+    p.move(m[0], m[1], x)
+    x.vis()
