@@ -8,7 +8,7 @@ class Player(object):
         self.x = x
         self.y = y
 
-    def move(self, nX, nY):
+    def move(self, nX, nY, board):
         self.x = nX
         self.y = nY
 
@@ -101,6 +101,10 @@ class Board(object):
             plt.savefig(outPath)
         if show:
             plt.show()
+
+
+class Game(object):
+    def __init__(self, )
 
 
 x = Board(11, 0.1)
