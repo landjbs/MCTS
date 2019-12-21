@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 
 
 class Player(object):
-    def __init__(self, name, x, y):
+    ''' Base player class to be inherited by Human_Player and Bot '''
+    def __init__(self, name, x, y, bot):
         self.name = name
         self.x = x
         self.y = y
@@ -20,6 +21,10 @@ class Player(object):
 
     def possible_moves(self, board):
         return board.get_moves((self.x, self.y))
+
+    def is_shot(self, board):
+        ''' Player checks if it is on laser '''
+        return (board[self.y, self.x, 0] == 1)
 
 
 class Board(object):
@@ -132,15 +137,25 @@ class Board(object):
             plt.show()
 
 
-# class Game(object):
-#     def __init__(self, )
+class Game(object):
+    def __init__(self, boardSize, cp, train=True):
+        self.p1 = Player('p1', 0, 0)
+        self.p2 = Player('p2', boardSize-1, boardSize-1)
+        self.board = Board(boardSize, [p1, p2], cp)
+
+    def turn(self):
+
+        self.p1.choose_move(self.board)
 
 
-x = Board(11, 1)
-p = Player('derek', 0, 0)
-for i in range(10):
-    mL = p.possible_moves(x)
-    print(mL)
-    m = mL[np.random.randint(0, len(mL))]
-    p.move(m[0], m[1], x)
-    x.vis()
+
+p1 = Player('derek', 0, 0)
+p2 = Player('landon', 10, 10)
+x = Board(11, [p1, p2], 1)
+x.vis()
+# for i in range(10):
+#     mL = p.possible_moves(x)
+#     print(mL)
+#     m = mL[np.random.randint(0, len(mL))]
+#     p.move(m[0], m[1], x)
+#     x.vis()
