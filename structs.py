@@ -2,6 +2,7 @@ import numpy as np
 from math import floor
 import matplotlib.pyplot as plt
 
+
 class Player(object):
     def __init__(self, name, x, y):
         self.name = name
@@ -17,7 +18,9 @@ class Player(object):
         board.add_shot((self.y, self.x), d)
 
     def possible_moves(self, board):
-        localKernel = self.board[(self.x-1):(self.x+1), ]
+        localKernel = board.board[(self.y-1):(self.y+1), (self.x-1):(self.x+1)]
+        print(localKernel)
+
 
 class Board(object):
     def __init__(self, size, p):
@@ -49,6 +52,10 @@ class Board(object):
             raise ValueError(f'Expected p in range [0, 1], but found {p}.')
         # add players
         self.board[[0, self.max], [0, self.max], 2] = 1
+
+    def get_moves(self, loc):
+        ''' Returns list of possible moves at loc '''
+        self.board
 
     def move_player(self, newLoc, prevLoc):
         ''' Lossily moves player from prevLoc to newLoc '''
@@ -109,12 +116,18 @@ class Board(object):
             plt.show()
 
 
-class Game(object):
-    def __init__(self, )
+# class Game(object):
+#     def __init__(self, )
 
 
 x = Board(11, 0.1)
-x.vis()
+p = Player('derek', 0, 0)
+p.shoot(2, x)
+# x.vis()
+x.clear_shots()
+p.move(1, 0, x)
+# x.vis()
+print(p.possible_moves(x))
 # x.move_player((5,5), (0,0))
 # for i in range(4):
 #     x.add_shot((5, 5), i)
