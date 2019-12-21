@@ -23,15 +23,16 @@ class Player(object):
 
 
 class Board(object):
-    def __init__(self, size, p):
+    def __init__(self, size, players, cp):
         '''
         Builds board object for laser tag. Stored as third order tensor of shape
         (size, size, 3) where last three dims correspond to shots, walls,
         and players, in that order. Board is low-level object contained in
         higher-level Game object.
         Args:
-            size:           Length of one axis of square board
-            p:              APPROX wall cover percent of board. Does not account
+            size:           Length of one axis of square board.
+            players:        List of Player objects for players in game.
+            cp:            APPROX wall cover percent of board. Does not account
                             for repetition. If p is 1, entire board
                             will be covered except for edge paths.
         '''
@@ -39,27 +40,32 @@ class Board(object):
         self.max = size - 1
         self.board = np.zeros((size, size, 3))
         # add walls
-        if (p == 0):
+        if (cp == 0):
             pass
-        elif (p == 1):
+        elif (cp == 1):
             self.board[1:self.max, 1:self.max, 1] = 1
-        elif (0 < p < 1):
-            coverNum = floor(p * (self.max)**2)
+        elif (0 < cp < 1):
+            coverNum = floor(cp * (self.max)**2)
             xCover = np.random.randint(1, self.max, coverNum)
             yCover = np.random.randint(1, self.max, coverNum)
             self.board[yCover, xCover, 1] = 1
         else:
             raise ValueError(f'Expected p in range [0, 1], but found {p}.')
         # add players
-        self.board[[0, self.max], [0, self.max], 2] = 1
+        for player in players:
+            if self.board[player.y, player.x, 2] == 0:
+                self.board[player.y, player.x, 2] = 1
+            else:
+                raise ValueError('Cannot place two players on the same spot.')
 
     def get_moves(self, loc):
         ''' Returns list of possible moves at loc '''
         x, y = loc
         minX, maxX = max(0, x-1), min(self.max, x+2)
         minY, maxY = max(0, y-1), min(self.max, y+2)
-        kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=1)
-        print(kernel)
+        kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=2)
+        plt.imshow(kernel)
+        plt.show()
         posMoves = list()
         for i, row in enumerate(kernel):
             for j, elt in enumerate(row):
@@ -130,11 +136,11 @@ class Board(object):
 #     def __init__(self, )
 
 
-x = Board(11, 0.1)
+x = Board(11, 1)
 p = Player('derek', 0, 0)
 for i in range(10):
     mL = p.possible_moves(x)
+    print(mL)
     m = mL[np.random.randint(0, len(mL))]
     p.move(m[0], m[1], x)
-    # print(mL)
     x.vis()
