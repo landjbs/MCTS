@@ -58,7 +58,8 @@ class Board(object):
         x, y = loc
         minX, maxX = max(0, x-1), min(self.max, x+2)
         minY, maxY = max(0, y-1), min(self.max, y+2)
-        kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=0)
+        kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=1)
+        print(kernel)
         posMoves = list()
         for i, row in enumerate(kernel):
             for j, elt in enumerate(row):
@@ -135,4 +136,5 @@ for i in range(10):
     mL = p.possible_moves(x)
     m = mL[np.random.randint(0, len(mL))]
     p.move(m[0], m[1], x)
+    # print(mL)
     x.vis()
