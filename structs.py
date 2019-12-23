@@ -217,11 +217,11 @@ class Game(object):
         self.pList = pList
         self.board = Board(boardSize, pList, cp)
         self.roundCount = 0
-        self.historyTensor = np.copy(self.board.board)
+        self.historyTensor = np.expand_dims(np.copy(self.board.board), axis=2)
 
     def add_history(self):
         self.historyTensor = np.concatenate([self.historyTensor,
-                                             self.board.board])
+                                             self.board.board], axis=2)
 
     def player_turn(self, p):
         ''' Runs turn for player p. Kills them if they can't move '''
@@ -273,12 +273,16 @@ class Game(object):
         self.board.clear_shots()
         return False
 
+    def vis_history(self):
+        for i in self.historyTensor:
+            plt.imshow(i)
+            plt.show()
+            plt.close()
+
     def play(self, roundNum):
         while (self.roundCount <= roundNum):
             result = self.play_round()
-            self.add_history()
             if result:
-                print(self.historyTensor)
                 return result
 
 bSize = 5
