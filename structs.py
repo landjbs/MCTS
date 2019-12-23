@@ -91,6 +91,10 @@ class Player(object):
         shotChoice = self.controller.choose_shot(board)
         return shotChoice
 
+    def return_to_start(self):
+        self.x = self.oX
+        self.y = self.oY
+
 
 class Board(object):
     def __init__(self, size, players, cp):
