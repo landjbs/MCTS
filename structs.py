@@ -249,14 +249,11 @@ class Game(object):
     def play_round(self):
         ''' Plays round returns true if done '''
         for p in self.pList:
-            if not self.player_turn(p):
-                self.lose(p)
-                print(self.pList)
+            self.player_turn(p)
             if (len(self.pList) == 1):
                 self.win(self.pList[0])
                 return True
         self.roundCount += 1
-        self.board.vis()
         self.board.clear_shots()
         return False
 
@@ -265,10 +262,8 @@ class Game(object):
             if self.play_round():
                 break
 
-bSize = 10
-p1 = Player(1, 1, Dummy('p1'))
+bSize = 5
+p1 = Player(1, 1, Bot('p1'))
 p2 = Player(bSize, bSize, Bot('p2'))
-p3 = Player(1, bSize, Bot('p3'))
-p4 = Player(bSize, 1, Bot('p4'))
-x = Game([p1, p2, p3, p4], bSize, 0.3)
+x = Game([p1, p2], bSize, 0.3)
 x.play(1000)
