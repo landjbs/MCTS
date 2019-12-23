@@ -206,26 +206,12 @@ class Board(object):
 
 class Game(object):
     def __init__(self, pList, boardSize, cp):
-        pNum = len(pList)
-        if (pNum == 1):
-            self.p1 = pList[0]
-        elif (pNum == 2):
-            self.p1, self.p2 = pList[0], pList[1]
-        elif (pNum == 3):
-            self.p1, self.p2, self.p3 = pList[0], pList[1], pList[2]
-        elif (pNum == 4):
-            (self.p1,
-             self.p2,
-             self.p3,
-             self.p4) = pList[0], pList[1], pList[2], pList[3]
-        else:
-            raise ValueError('pList must have length between 1 and 4.')
         self.pList = pList
         self.board = Board(boardSize, pList, cp)
         self.roundCount = 0
 
     def player_turn(self, p):
-        ''' Runs turn for player p. Returns False if they are dead. '''
+        ''' Runs turn for player p. Kills them if they can't move '''
         if p.is_shot(self.board):
             return False
         move = p.choose_move(self.board)
@@ -236,6 +222,15 @@ class Game(object):
         if shot:
             p.shoot(shot, self.board)
         return True
+
+    def check_deaths(self):
+        '''
+        Checks if any of the players are hit by a shot.
+        Runs after any shot and kills any shot players.
+        '''
+        for p in self.pList:
+            if p.is_shot(self.board):
+                self.lose(p)
 
     def win(self, p):
         ''' Gives winning conditions to player '''
@@ -254,7 +249,6 @@ class Game(object):
     def play_round(self):
         ''' Plays round returns true if done '''
         for p in self.pList:
-            print(p.name)
             if not self.player_turn(p):
                 self.lose(p)
                 print(self.pList)
@@ -271,20 +265,10 @@ class Game(object):
             if self.play_round():
                 break
 
-
-p1 = Player(1, 1, Bot('p1'))
-p2 = Player(5, 5, Bot('p2'))
-p3 = Player(1, 5, Bot('p3'))
-x = Game([p1, p2, p3], 5, 0)
-x.play(100)
-
-# p1 = Player('derek', 0, 0, Bot())
-# p2 = Player('landon', 10, 10, Bot())
-# x = Board(11, [p1, p2], 1)
-# x.vis()
-# for i in range(10):
-#     mL = p.possible_moves(x)
-#     print(mL)
-#     m = mL[np.random.randint(0, len(mL))]
-#     p.move(m[0], m[1], x)
-#     x.vis()
+bSize = 10
+p1 = Player(1, 1, Dummy('p1'))
+p2 = Player(bSize, bSize, Bot('p2'))
+p3 = Player(1, bSize, Bot('p3'))
+p4 = Player(bSize, 1, Bot('p4'))
+x = Game([p1, p2, p3, p4], bSize, 0.3)
+x.play(1000)
