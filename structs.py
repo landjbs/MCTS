@@ -32,14 +32,12 @@ class Bot(Controller):
         super(Bot, self).__init__(name)
 
     def choose_move(self, moveList, board):
-        print(moveList)
         i = np.random.randint(0, len(moveList))
         return moveList[i]
 
     def choose_shot(self, board):
-        # i = np.random.randint(0, 5)
-        return 1
-        # return [None, 0, 1, 2, 3][i]
+        i = np.random.randint(0, 5)
+        return [0, 1, 2, 3][i]
 
 
 class Dummy(Controller):
@@ -247,7 +245,8 @@ class Game(object):
         ''' Gives losing conditions to player '''
         if isinstance(p.controller, Bot):
             pass
-        print(f'{p.name} has lost')
+        self.board[p.y, p.x, 1] == 0
+        print(f'{p.name} has lost.')
 
     def play_round(self):
         ''' Plays round returns true if done '''
@@ -258,9 +257,9 @@ class Game(object):
             if (len(self.pList) == 1):
                 self.win(self.pList[0])
                 return True
-            self.board.clear_shots()
         self.roundCount += 1
         self.board.vis()
+        self.board.clear_shots()
         return False
 
     def play(self, roundNum):
