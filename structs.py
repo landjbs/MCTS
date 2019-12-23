@@ -116,6 +116,7 @@ class Board(object):
         self.max = size - 1
         self.board = np.zeros((size+2, size+2, 3))
         # add walls
+        # TODO: add rules such that size scales with player number
         if (size > 3):
             pass
         elif (size == 3):
