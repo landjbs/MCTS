@@ -38,7 +38,7 @@ class Bot(Controller):
 
     def choose_shot(self, board):
         # i = np.random.randint(0, 5)
-        return 1
+        return 0
         # return [None, 0, 1, 2, 3][i]
 
 
@@ -134,8 +134,6 @@ class Board(object):
     def get_moves(self, loc):
         ''' Returns list of possible moves from loc '''
         x, y = loc
-        # minX, maxX = max(0, x-1), min(self.max, x+2)
-        # minY, maxY = max(0, y-1), min(self.max, y+2)
         minX, maxX = x - 1, x + 2
         minY, maxY = y - 1, y + 2
         kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=2)
@@ -222,6 +220,7 @@ class Game(object):
             return False
         p.move(move[0], move[1], self.board)
         shot = p.choose_shot(self.board)
+        print(shot)
         if shot:
             print(p.name)
             p.shoot(shot, self.board)
@@ -255,8 +254,8 @@ class Game(object):
                 break
 
 
-x = Game(10, 0)
-x.play(10)
+x = Game(5, 0)
+x.play(100)
 
 # p1 = Player('derek', 0, 0, Bot())
 # p2 = Player('landon', 10, 10, Bot())
