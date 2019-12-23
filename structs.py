@@ -37,7 +37,7 @@ class Bot(Controller):
 
     def choose_shot(self, board):
         i = np.random.randint(0, 5)
-        return [0, 1, 2, 3][i]
+        return [0, 1, 2, 3, 4][i]
 
 
 class Dummy(Controller):
@@ -147,6 +147,9 @@ class Board(object):
         self.board[prevLoc[0], prevLoc[1], 2] = 0
         self.board[newLoc[0], newLoc[1], 2] = 1
 
+    def remove_player(self, loc):
+        self.board[loc[1], loc[0], 2] = 0
+
     def clear_shots(self):
         self.board[:, :, 0] = 0
 
@@ -231,7 +234,6 @@ class Game(object):
         p.move(move[0], move[1], self.board)
         shot = p.choose_shot(self.board)
         if shot:
-            print(p.name)
             p.shoot(shot, self.board)
         return True
 
@@ -245,7 +247,8 @@ class Game(object):
         ''' Gives losing conditions to player '''
         if isinstance(p.controller, Bot):
             pass
-        self.board[p.y, p.x, 1] == 0
+        self.board.board[p.y, p.x, 2] == 0
+        self.pList.remove(p)
         print(f'{p.name} has lost.')
 
     def play_round(self):
@@ -253,7 +256,7 @@ class Game(object):
         for p in self.pList:
             if not self.player_turn(p):
                 self.lose(p)
-                self.pList.remove(p)
+                print(self.pList)
             if (len(self.pList) == 1):
                 self.win(self.pList[0])
                 return True
@@ -266,6 +269,7 @@ class Game(object):
         while (self.roundCount <= roundNum):
             if self.play_round():
                 break
+
 
 p1 = Player(1, 1, Bot('p1'))
 p2 = Player(5, 5, Bot('p2'))
