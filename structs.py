@@ -253,15 +253,12 @@ class Game(object):
         ''' Plays round returns true if done '''
         for p in self.pList:
             if not self.player_turn(p):
+                self.lose(p)
                 self.pList.remove(p)
-
-
-        if not self.player_turn(self.p1):
-            self.win(self.p2)
-            return True
-        if not self.player_turn(self.p2):
-            self.win(self.p1)
-            return True
+            if (len(self.pList) == 1):
+                self.win(self.pList[0])
+                return True
+            self.clear_shots()
         self.roundCount += 1
         self.board.vis()
         self.board.clear_shots()
