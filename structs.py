@@ -204,10 +204,22 @@ class Board(object):
 
 
 class Game(object):
-    def __init__(self, boardSize, cp, train=True):
-        self.p1 = Player(1, 1, Bot('p1'))
-        self.p2 = Player(boardSize, boardSize, Dummy('p2'))
-        self.board = Board(boardSize, [self.p1, self.p2], cp)
+    def __init__(self, pList, boardSize, cp):
+        pNum = len(pList)
+        if (pNum == 1):
+            self.p1 = pList[0]
+        elif (pNum == 2):
+            self.p1, self.p2 = pList[0], pList[1]
+        elif (pNum == 3):
+            self.p1, self.p2, self.p3 = pList[0], pList[1], pList[2]
+        elif (pNum == 4):
+            (self.p1,
+             self.p2,
+             self.p3,
+             self.p4) = pList[0], pList[1], pList[2], pList[3]
+        else:
+            raise ValueError('pList must have length between 1 and 4.')
+        self.board = Board(boardSize, pList, cp)
         self.roundCount = 0
 
     def player_turn(self, p):
@@ -251,7 +263,8 @@ class Game(object):
             if self.play_round():
                 break
 
-
+p1 = Player(1, 1, Bot('p1'))
+p2 = Player(10, 10, Bot('p2'))
 x = Game(5, 0)
 x.play(100)
 
