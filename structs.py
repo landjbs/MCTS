@@ -38,7 +38,7 @@ class Bot(Controller):
 
     def choose_shot(self, board):
         # i = np.random.randint(0, 5)
-        return 0
+        return 1
         # return [None, 0, 1, 2, 3][i]
 
 
@@ -155,19 +155,19 @@ class Board(object):
     def add_shot(self, start, d):
         '''
         Adds shot from start in straight line in direction d. Directions are
-        0 - up, 1 - right, 2 - down, 3 - left. Go as far as they can before
+        1-up, 2-right, 3-down, 4-left. Shots go as far as they can before
         hitting a wall.
         '''
-        if (d == 0):
+        if (d == 1):
             sliceList = list(self.board[:start[0], start[1], 1])
             sliceList.reverse()
             try:
                 wallDist = sliceList.index(1) + 1
             except ValueError:
                 wallDist = self.size
-            stop = max(self.min, start[0]-wallDist)
+            stop = max(0, start[0]-wallDist)
             self.board[stop:start[0], start[1], 0] = 1
-        elif (d == 1):
+        elif (d == 2):
             sliceList = list(self.board[start[0], start[1]:, 1])
             try:
                 wallDist = sliceList.index(1) + 1
@@ -175,7 +175,7 @@ class Board(object):
                 wallDist = self.size
             stop = start[1] + wallDist
             self.board[start[0], (start[1]+1):stop, 0] = 1
-        elif (d == 2):
+        elif (d == 3):
             sliceList = list(self.board[start[0]:, start[1], 1])
             try:
                 wallDist = sliceList.index(1) + 1
@@ -183,14 +183,14 @@ class Board(object):
                 wallDist = self.size
             stop = start[0]+wallDist
             self.board[(start[0]+1):stop, start[1], 0] = 1
-        elif (d == 3):
+        elif (d == 4):
             sliceList = list(self.board[start[0], :start[1], 1])
             sliceList.reverse()
             try:
                 wallDist = sliceList.index(1) + 1
             except ValueError:
                 wallDist = self.size
-            stop = max(self.min, start[1]-wallDist)
+            stop = max(0, start[1]-wallDist)
             self.board[start[0], stop:start[1], 0] = 1
         else:
             raise ValueError(f'Expected d in range [0, 3], but found {d}.')
@@ -206,8 +206,7 @@ class Board(object):
 class Game(object):
     def __init__(self, boardSize, cp, train=True):
         self.p1 = Player(1, 1, Bot('p1'))
-        # self.p2 = Player(boardSize-1, boardSize-1, Bot('p2'))
-        self.p2 = Player(boardSize, boardSize, Bot('p2'))
+        self.p2 = Player(boardSize, boardSize, Dummy('p2'))
         self.board = Board(boardSize, [self.p1, self.p2], cp)
         self.roundCount = 0
 
@@ -220,7 +219,6 @@ class Game(object):
             return False
         p.move(move[0], move[1], self.board)
         shot = p.choose_shot(self.board)
-        print(shot)
         if shot:
             print(p.name)
             p.shoot(shot, self.board)
