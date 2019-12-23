@@ -38,7 +38,7 @@ class Bot(Controller):
 
     def choose_shot(self, board):
         # i = np.random.randint(0, 5)
-        return 0
+        return 1
         # return [None, 0, 1, 2, 3][i]
 
 
@@ -139,9 +139,6 @@ class Board(object):
         minX, maxX = x - 1, x + 2
         minY, maxY = y - 1, y + 2
         kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=2)
-        self.board[minY:maxY, minX:maxX, 0] = 1 - kernel
-        # plt.imshow(kernel)
-        # plt.show()
         posMoves = list()
         for i, row in enumerate(kernel):
             for j, elt in enumerate(row):
