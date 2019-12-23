@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class Game(object):
     def __init__(self, pList, boardSize, cp):
         self.pList = pList
