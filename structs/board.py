@@ -1,3 +1,8 @@
+import numpy as np
+from math import floor, ceil
+import matplotlib.pyplot as plt
+
+
 class Board(object):
     def __init__(self, size, players, cp):
         '''

@@ -1,4 +1,5 @@
 import numpy as np
+from board import Board
 
 
 class Game(object):
