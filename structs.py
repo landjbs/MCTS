@@ -2,6 +2,7 @@ import numpy as np
 from math import floor
 import matplotlib.pyplot as plt
 
+
 class Controller(object):
     def __init__(self, name):
         self.name = name
@@ -11,6 +12,7 @@ class Controller(object):
 
     def choose_shot(self, board):
         pass
+
 
 class Human(Controller):
     ''' Human-controlled player for game api # TODO: finish '''
@@ -22,6 +24,7 @@ class Human(Controller):
 
     def choose_shot(self, board):
         pass
+
 
 class Bot(Controller):
     ''' Bot-controlled player that learns across games '''
@@ -41,7 +44,7 @@ class Bot(Controller):
 class Dummy(Controller):
     ''' Dummy player that stays in one spot and never shoots '''
     def __init__(self, name):
-        super(Dummy, self).__init_(name)
+        super(Dummy, self).__init__(name)
 
     def choose_move(self, moveList, board):
         return (0, 0)
@@ -197,7 +200,8 @@ class Board(object):
 class Game(object):
     def __init__(self, boardSize, cp, train=True):
         self.p1 = Player(0, 0, Bot('p1'))
-        self.p2 = Player(boardSize-1, boardSize-1, Bot('p2'))
+        # self.p2 = Player(boardSize-1, boardSize-1, Bot('p2'))
+        self.p2 = Player(boardSize-1, boardSize-1, Dummy('p2'))
         self.board = Board(boardSize, [self.p1, self.p2], cp)
         self.roundCount = 0
 
