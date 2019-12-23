@@ -237,6 +237,7 @@ class Game(object):
         if isinstance(p.controller, Bot):
             pass
         print(f'{p.name} is the winner!')
+        return p
 
     def lose(self, p):
         ''' Gives losing conditions to player '''
@@ -245,25 +246,31 @@ class Game(object):
         self.board.remove_player((p.x, p.y)) == 0
         self.pList.remove(p)
         print(f'{p.name} has lost.')
+        return p
 
     def play_round(self):
-        ''' Plays round returns true if done '''
+        ''' Plays round returns player object if done and false otherwise '''
         for p in self.pList:
             self.player_turn(p)
             if (len(self.pList) == 1):
-                self.win(self.pList[0])
-                return True
+                return self.win(self.pList[0])
         self.roundCount += 1
         self.board.clear_shots()
         return False
 
     def play(self, roundNum):
         while (self.roundCount <= roundNum):
-            if self.play_round():
-                break
+            result = self.play_round()
+            if result:
+                self.board.vis()
+                return result
 
 bSize = 5
 p1 = Player(1, 1, Bot('p1'))
 p2 = Player(bSize, bSize, Bot('p2'))
-x = Game([p1, p2], bSize, 0.3)
-x.play(1000)
+p3 = Player(1, bSize, Bot('p3'))
+p4 = Player(bSize, 1, Bot('p4'))
+
+for _ in range(100):
+    x = Game([p1, p2, p3, p4], bSize, 0.3)
+    x.play(1000)
