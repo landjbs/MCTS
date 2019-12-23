@@ -56,8 +56,12 @@ class Player(object):
     ''' Base player class to be inherited by Human and Bot '''
     def __init__(self, x, y, controller):
         self.name = controller.name
+        # updating loc
         self.x = x
         self.y = y
+        # perpetual spawn loc
+        self.oX = x
+        self.oY = y
         self.controller = controller
 
     def move(self, dx, dy, board):
@@ -262,7 +266,7 @@ class Game(object):
         while (self.roundCount <= roundNum):
             result = self.play_round()
             if result:
-                self.board.vis()
+                # self.board.vis()
                 return result
 
 bSize = 5
