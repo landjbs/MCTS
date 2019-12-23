@@ -37,8 +37,9 @@ class Bot(Controller):
         return moveList[i]
 
     def choose_shot(self, board):
-        i = np.random.randint(0, 5)
-        return [None, 0, 1, 2, 3][i]
+        # i = np.random.randint(0, 5)
+        return 0
+        # return [None, 0, 1, 2, 3][i]
 
 
 class Dummy(Controller):
@@ -79,6 +80,8 @@ class Player(object):
 
     def choose_move(self, board):
         moveList = self.possible_moves(board)
+        if len(moveList) == 0:
+            return None
         moveChoice = self.controller.choose_move(moveList, board)
         return moveChoice
 
@@ -135,7 +138,7 @@ class Board(object):
         for i, row in enumerate(kernel):
             for j, elt in enumerate(row):
                 if (elt == 0):
-                    posMoves.append((j, i))
+                    posMoves.append((j-1, i-1))
         return posMoves
 
     def move_player(self, newLoc, prevLoc):
