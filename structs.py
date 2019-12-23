@@ -105,17 +105,22 @@ class Board(object):
                             will be covered except for edge paths.
         '''
         self.size = size
-        self.max = size - 1
-        self.board = np.zeros((size, size, 3))
+        self.min = 1
+        self.max = size - 2
+        self.board = np.zeros((size+2, size+2, 3))
         # add walls
+        self.board[0:, 0, 1] = 1
+        self.board[0, 0:, 1] = 1
+        self.board[0:, size, 1] = 1
+        self.board[size, 0, 1] = 1
         if (cp == 0):
             pass
         elif (cp == 1):
-            self.board[1:self.max, 1:self.max, 1] = 1
+            self.board[2:self.max, 2:self.max, 1] = 1
         elif (0 < cp < 1):
             coverNum = floor(cp * (self.max)**2)
-            xCover = np.random.randint(1, self.max, coverNum)
-            yCover = np.random.randint(1, self.max, coverNum)
+            xCover = np.random.randint(2, self.max, coverNum)
+            yCover = np.random.randint(2, self.max, coverNum)
             self.board[yCover, xCover, 1] = 1
         else:
             raise ValueError(f'Expected p in range [0, 1], but found {p}.')
@@ -129,11 +134,13 @@ class Board(object):
     def get_moves(self, loc):
         ''' Returns list of possible moves from loc '''
         x, y = loc
-        minX, maxX = max(0, x-1), min(self.max, x+2)
-        minY, maxY = max(0, y-1), min(self.max, y+2)
+        # minX, maxX = max(0, x-1), min(self.max, x+2)
+        # minY, maxY = max(0, y-1), min(self.max, y+2)
+        minX, maxX = x - 1, x + 2
+        minY, maxY = y - 1, y + 2
         kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=2)
-        # plt.imshow(kernel)
-        # plt.show()
+        plt.imshow(kernel)
+        plt.show()
         posMoves = list()
         for i, row in enumerate(kernel):
             for j, elt in enumerate(row):
@@ -162,7 +169,7 @@ class Board(object):
                 wallDist = sliceList.index(1) + 1
             except ValueError:
                 wallDist = self.size
-            stop = max(0, start[0]-wallDist)
+            stop = max(self.min, start[0]-wallDist)
             self.board[stop:start[0], start[1], 0] = 1
         elif (d == 1):
             sliceList = list(self.board[start[0], start[1]:, 1])
@@ -187,7 +194,7 @@ class Board(object):
                 wallDist = sliceList.index(1) + 1
             except ValueError:
                 wallDist = self.size
-            stop = max(0 , start[1]-wallDist)
+            stop = max(self.min, start[1]-wallDist)
             self.board[start[0], stop:start[1], 0] = 1
         else:
             raise ValueError(f'Expected d in range [0, 3], but found {d}.')
@@ -202,9 +209,9 @@ class Board(object):
 
 class Game(object):
     def __init__(self, boardSize, cp, train=True):
-        self.p1 = Player(0, 0, Bot('p1'))
+        self.p1 = Player(1, 1, Bot('p1'))
         # self.p2 = Player(boardSize-1, boardSize-1, Bot('p2'))
-        self.p2 = Player(boardSize-1, boardSize-1, Dummy('p2'))
+        self.p2 = Player(boardSize-2, boardSize-2, Dummy('p2'))
         self.board = Board(boardSize, [self.p1, self.p2], cp)
         self.roundCount = 0
 
