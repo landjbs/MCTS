@@ -12,13 +12,18 @@ class Controller(object):
     def choose_shot(self, board):
         pass
 
-class Human():
+class Human(Controller):
     ''' Human-controlled player for game api # TODO: finish '''
-    def __init__(self):
+    def __init__(self, name):
+        super(Human, self).__init__(name)
+
+    def choose_move(self, moveList, board):
         pass
 
+    def choose_shot(self, board):
+        pass
 
-class Bot():
+class Bot(Controller):
     ''' Bot-controlled player that learns across games '''
     def __init__(self):
         pass
