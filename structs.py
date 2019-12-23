@@ -25,8 +25,8 @@ class Human(Controller):
 
 class Bot(Controller):
     ''' Bot-controlled player that learns across games '''
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        super(Bot, self).__init__(name)
 
     def choose_move(self, moveList, board):
         i = np.random.randint(0, len(moveList))
@@ -39,8 +39,8 @@ class Bot(Controller):
 
 class Player(object):
     ''' Base player class to be inherited by Human and Bot '''
-    def __init__(self, name, x, y, controller):
-        self.name = name
+    def __init__(self, x, y, controller):
+        self.name = controller.name
         self.x = x
         self.y = y
         self.controller = controller
@@ -183,8 +183,8 @@ class Board(object):
 
 class Game(object):
     def __init__(self, boardSize, cp, train=True):
-        self.p1 = Player('p1', 0, 0, Bot())
-        self.p2 = Player('p2', boardSize-1, boardSize-1, Bot())
+        self.p1 = Player(0, 0, Bot('p1'))
+        self.p2 = Player(boardSize-1, boardSize-1, Bot('p2'))
         self.board = Board(boardSize, [self.p1, self.p2], cp)
         self.roundCount = 0
 
