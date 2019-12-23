@@ -217,6 +217,11 @@ class Game(object):
         self.pList = pList
         self.board = Board(boardSize, pList, cp)
         self.roundCount = 0
+        self.historyTensor = np.copy(self.board.board)
+
+    def add_history(self):
+        self.historyTensor = np.concatenate([self.historyTensor,
+                                             self.board.board])
 
     def player_turn(self, p):
         ''' Runs turn for player p. Kills them if they can't move '''
@@ -245,6 +250,7 @@ class Game(object):
         if isinstance(p.controller, Bot):
             pass
         print(f'{p.name} is the winner!')
+        p.return_to_start()
         return p
 
     def lose(self, p):
@@ -253,6 +259,7 @@ class Game(object):
             pass
         self.board.remove_player((p.x, p.y)) == 0
         self.pList.remove(p)
+        p.return_to_start()
         print(f'{p.name} has lost.')
         return p
 
@@ -269,8 +276,9 @@ class Game(object):
     def play(self, roundNum):
         while (self.roundCount <= roundNum):
             result = self.play_round()
+            self.add_history()
             if result:
-                # self.board.vis()
+                print(self.historyTensor)
                 return result
 
 bSize = 5
