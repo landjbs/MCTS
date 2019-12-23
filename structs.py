@@ -2,6 +2,15 @@ import numpy as np
 from math import floor
 import matplotlib.pyplot as plt
 
+class Controller(object):
+    def __init__(self, name):
+        self.name = name
+
+    def choose_move(self, moveList, board):
+        pass
+
+    def choose_shot(self, board):
+        pass
 
 class Human():
     ''' Human-controlled player for game api # TODO: finish '''
@@ -21,6 +30,7 @@ class Bot():
     def choose_shot(self, board):
         i = np.random.randint(0, 5)
         return [None, 0, 1, 2, 3][i]
+
 
 class Player(object):
     ''' Base player class to be inherited by Human and Bot '''
@@ -205,8 +215,8 @@ class Game(object):
             self.win(self.p1)
             return True
         self.roundCount += 1
-        self.board.clear_shots()
         self.board.vis()
+        self.board.clear_shots()
         return False
 
     def play(self, maxRound=10):
