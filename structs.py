@@ -139,6 +139,7 @@ class Board(object):
         minX, maxX = x - 1, x + 2
         minY, maxY = y - 1, y + 2
         kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=2)
+        self.board[minY:maxY, minX:maxX, 0] = 1 - kernel
         # plt.imshow(kernel)
         # plt.show()
         posMoves = list()
@@ -211,7 +212,7 @@ class Game(object):
     def __init__(self, boardSize, cp, train=True):
         self.p1 = Player(1, 1, Bot('p1'))
         # self.p2 = Player(boardSize-1, boardSize-1, Bot('p2'))
-        self.p2 = Player(boardSize, boardSize, Dummy('p2'))
+        self.p2 = Player(boardSize, boardSize, Bot('p2'))
         self.board = Board(boardSize, [self.p1, self.p2], cp)
         self.roundCount = 0
 
@@ -251,14 +252,14 @@ class Game(object):
         self.board.clear_shots()
         return False
 
-    def play(self, maxRound=1):
-        while (self.roundCount <= maxRound):
+    def play(self, roundNum):
+        while (self.roundCount <= roundNum):
             if self.play_round():
                 break
 
 
-x = Game(10, 1)
-x.play(100)
+x = Game(10, 0)
+x.play(10)
 
 # p1 = Player('derek', 0, 0, Bot())
 # p2 = Player('landon', 10, 10, Bot())
