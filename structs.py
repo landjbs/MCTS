@@ -247,13 +247,14 @@ class Game(object):
         ''' Gives losing conditions to player '''
         if isinstance(p.controller, Bot):
             pass
-        self.board.board[p.y, p.x, 2] == 0
+        self.board.remove_player((p.x, p.y)) == 0
         self.pList.remove(p)
         print(f'{p.name} has lost.')
 
     def play_round(self):
         ''' Plays round returns true if done '''
         for p in self.pList:
+            print(p.name)
             if not self.player_turn(p):
                 self.lose(p)
                 print(self.pList)
