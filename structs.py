@@ -114,8 +114,17 @@ class Board(object):
         self.size = size
         self.min = 1
         self.max = size - 1
-        self.board = np.zeros((size+1, size+1, 3))
+        self.board = np.zeros((size+2, size+2, 3))
         # add walls
+        if (size > 3):
+            pass
+        elif (size == 3):
+            if cp not in [0, 1]:
+                raise ValueError('Boards with size 3 must have cp in [0, 1].')
+        else:
+            raise ValueError('size must be greater than 3.')
+
+        # elif size <=
         self.board[0:, 0, 1] = 1
         self.board[0, 0:, 1] = 1
         self.board[0:, size+1, 1] = 1
@@ -123,14 +132,12 @@ class Board(object):
         if (cp == 0):
             pass
         elif (cp == 1):
-            if size >= 3:
-                self.board[2:size, 2:size, 1] = 1
+            self.board[2:size, 2:size, 1] = 1
         elif (0 < cp < 1):
-            if size >= 5:
-                coverNum = floor(cp * (self.max)**2)
-                xCover = np.random.randint(2, self.max, coverNum)
-                yCover = np.random.randint(2, self.max, coverNum)
-                self.board[yCover, xCover, 1] = 1
+            coverNum = floor(cp * (self.max)**2)
+            xCover = np.random.randint(2, self.max, coverNum)
+            yCover = np.random.randint(2, self.max, coverNum)
+            self.board[yCover, xCover, 1] = 1
         else:
             raise ValueError(f'Expected cp in range [0, 1], but found {cp}.')
         # add players
@@ -289,13 +296,13 @@ class Game(object):
                 break
                 return result
 
-bSize = 40
+bSize = 3
 p1 = Player(1, 1, Bot('p1'))
 p2 = Player(bSize, bSize, Bot('p2'))
 p3 = Player(1, bSize, Bot('p3'))
 p4 = Player(bSize, 1, Bot('p4'))
 
-for _ in range(100):
-    x = Game([p1, p2, p3, p4], bSize, 0.3)
+for _ in range(1):
+    x = Game([p1, p2, p3, p4], bSize, 0)
     x.board.vis()
     x.play(1000)
