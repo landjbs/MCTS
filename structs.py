@@ -212,25 +212,25 @@ class Game(object):
 
     def player_turn(self, p):
         ''' Runs turn for player p. Kills them if they can't move '''
-        if p.is_shot(self.board):
-            return False
         move = p.choose_move(self.board)
         if not move:
-            return False
+            self.lose(p)
         p.move(move[0], move[1], self.board)
         shot = p.choose_shot(self.board)
         if shot:
             p.shoot(shot, self.board)
+            self.check_deaths(p)
         return True
 
-    def check_deaths(self):
+    def check_deaths(self, skip):
         '''
         Checks if any of the players are hit by a shot.
         Runs after any shot and kills any shot players.
         '''
         for p in self.pList:
-            if p.is_shot(self.board):
-                self.lose(p)
+            if p != skip:
+                if p.is_shot(self.board):
+                    self.lose(p)
 
     def win(self, p):
         ''' Gives winning conditions to player '''
