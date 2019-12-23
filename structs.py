@@ -1,5 +1,5 @@
 import numpy as np
-from math import floor
+from math import floor, ceil
 import matplotlib.pyplot as plt
 
 
@@ -82,6 +82,7 @@ class Player(object):
 
     def choose_move(self, board):
         moveList = self.possible_moves(board)
+        print(moveList)
         if len(moveList) == 0:
             return None
         moveChoice = self.controller.choose_move(moveList, board)
@@ -112,8 +113,8 @@ class Board(object):
         '''
         self.size = size
         self.min = 1
-        self.max = size - 2
-        self.board = np.zeros((size+2, size+2, 3))
+        self.max = size - 1
+        self.board = np.zeros((size+1, size+1, 3))
         # add walls
         self.board[0:, 0, 1] = 1
         self.board[0, 0:, 1] = 1
@@ -122,14 +123,16 @@ class Board(object):
         if (cp == 0):
             pass
         elif (cp == 1):
-            self.board[2:size, 2:size, 1] = 1
+            if size >= 3:
+                self.board[2:size, 2:size, 1] = 1
         elif (0 < cp < 1):
-            coverNum = floor(cp * (self.max)**2)
-            xCover = np.random.randint(2, self.max, coverNum)
-            yCover = np.random.randint(2, self.max, coverNum)
-            self.board[yCover, xCover, 1] = 1
+            if size >= 5:
+                coverNum = floor(cp * (self.max)**2)
+                xCover = np.random.randint(2, self.max, coverNum)
+                yCover = np.random.randint(2, self.max, coverNum)
+                self.board[yCover, xCover, 1] = 1
         else:
-            raise ValueError(f'Expected p in range [0, 1], but found {p}.')
+            raise ValueError(f'Expected cp in range [0, 1], but found {cp}.')
         # add players
         for player in players:
             if self.board[player.y, player.x, 2] == 0:
@@ -233,6 +236,7 @@ class Game(object):
         if shot:
             p.shoot(shot, self.board)
             self.check_deaths(p)
+        self.board.clear_shots()
         return True
 
     def check_deaths(self, skip):
@@ -270,7 +274,6 @@ class Game(object):
             if (len(self.pList) == 1):
                 return self.win(self.pList[0])
         self.roundCount += 1
-        self.board.clear_shots()
         return False
 
     def vis_history(self):
@@ -283,9 +286,10 @@ class Game(object):
         while (self.roundCount <= roundNum):
             result = self.play_round()
             if result:
+                break
                 return result
 
-bSize = 5
+bSize = 40
 p1 = Player(1, 1, Bot('p1'))
 p2 = Player(bSize, bSize, Bot('p2'))
 p3 = Player(1, bSize, Bot('p3'))
@@ -293,4 +297,5 @@ p4 = Player(bSize, 1, Bot('p4'))
 
 for _ in range(100):
     x = Game([p1, p2, p3, p4], bSize, 0.3)
+    x.board.vis()
     x.play(1000)
