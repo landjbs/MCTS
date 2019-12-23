@@ -219,6 +219,7 @@ class Game(object):
              self.p4) = pList[0], pList[1], pList[2], pList[3]
         else:
             raise ValueError('pList must have length between 1 and 4.')
+        self.pList = pList
         self.board = Board(boardSize, pList, cp)
         self.roundCount = 0
 
@@ -238,15 +239,23 @@ class Game(object):
 
     def win(self, p):
         ''' Gives winning conditions to player '''
-        # if isinstance(p.controller, Bot):
-        #     pass
-        #     break
-        # else:
-        #     pass
+        if isinstance(p.controller, Bot):
+            pass
         print(f'{p.name} is the winner!')
+
+    def lose(self, p):
+        ''' Gives losing conditions to player '''
+        if isinstance(p.controller, Bot):
+            pass
+        print(f'{p.name} has lost')
 
     def play_round(self):
         ''' Plays round returns true if done '''
+        for p in self.pList:
+            if not self.player_turn(p):
+                self.pList.remove(p)
+
+
         if not self.player_turn(self.p1):
             self.win(self.p2)
             return True
@@ -264,8 +273,9 @@ class Game(object):
                 break
 
 p1 = Player(1, 1, Bot('p1'))
-p2 = Player(10, 10, Bot('p2'))
-x = Game(5, 0)
+p2 = Player(5, 5, Bot('p2'))
+p3 = Player(1, 5, Bot('p3'))
+x = Game([p1, p2, p3], 5, 0)
 x.play(100)
 
 # p1 = Player('derek', 0, 0, Bot())
