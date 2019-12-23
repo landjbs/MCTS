@@ -29,12 +29,25 @@ class Bot(Controller):
         super(Bot, self).__init__(name)
 
     def choose_move(self, moveList, board):
+        print(moveList)
         i = np.random.randint(0, len(moveList))
         return moveList[i]
 
     def choose_shot(self, board):
         i = np.random.randint(0, 5)
         return [None, 0, 1, 2, 3][i]
+
+
+class Dummy(Controller):
+    ''' Dummy player that stays in one spot and never shoots '''
+    def __init__(self, name):
+        super(Dummy, self).__init_(name)
+
+    def choose_move(self, moveList, board):
+        return (0, 0)
+
+    def choose_shot(self, board):
+        return None
 
 
 class Player(object):
@@ -108,7 +121,7 @@ class Board(object):
                 raise ValueError('Cannot place two players on the same spot.')
 
     def get_moves(self, loc):
-        ''' Returns list of possible moves at loc '''
+        ''' Returns list of possible moves from loc '''
         x, y = loc
         minX, maxX = max(0, x-1), min(self.max, x+2)
         minY, maxY = max(0, y-1), min(self.max, y+2)
@@ -224,8 +237,8 @@ class Game(object):
         self.board.clear_shots()
         return False
 
-    def play(self, maxRound=10):
-        for i in range(maxRound):
+    def play(self, maxRound=1):
+        while (self.roundCount <= maxRound):
             if self.play_round():
                 break
 
