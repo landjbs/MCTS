@@ -111,12 +111,12 @@ class Board(object):
         # add walls
         self.board[0:, 0, 1] = 1
         self.board[0, 0:, 1] = 1
-        self.board[0:, size, 1] = 1
-        self.board[size, 0, 1] = 1
+        self.board[0:, size+1, 1] = 1
+        self.board[size+1, 0:, 1] = 1
         if (cp == 0):
             pass
         elif (cp == 1):
-            self.board[2:self.max, 2:self.max, 1] = 1
+            self.board[2:size, 2:size, 1] = 1
         elif (0 < cp < 1):
             coverNum = floor(cp * (self.max)**2)
             xCover = np.random.randint(2, self.max, coverNum)
@@ -139,8 +139,8 @@ class Board(object):
         minX, maxX = x - 1, x + 2
         minY, maxY = y - 1, y + 2
         kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=2)
-        plt.imshow(kernel)
-        plt.show()
+        # plt.imshow(kernel)
+        # plt.show()
         posMoves = list()
         for i, row in enumerate(kernel):
             for j, elt in enumerate(row):
@@ -211,7 +211,7 @@ class Game(object):
     def __init__(self, boardSize, cp, train=True):
         self.p1 = Player(1, 1, Bot('p1'))
         # self.p2 = Player(boardSize-1, boardSize-1, Bot('p2'))
-        self.p2 = Player(boardSize-2, boardSize-2, Dummy('p2'))
+        self.p2 = Player(boardSize, boardSize, Dummy('p2'))
         self.board = Board(boardSize, [self.p1, self.p2], cp)
         self.roundCount = 0
 
@@ -257,7 +257,7 @@ class Game(object):
                 break
 
 
-x = Game(10, 0.1)
+x = Game(10, 1)
 x.play(100)
 
 # p1 = Player('derek', 0, 0, Bot())
