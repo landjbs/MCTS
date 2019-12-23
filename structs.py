@@ -258,10 +258,9 @@ class Game(object):
             if (len(self.pList) == 1):
                 self.win(self.pList[0])
                 return True
-            self.clear_shots()
+            self.board.clear_shots()
         self.roundCount += 1
         self.board.vis()
-        self.board.clear_shots()
         return False
 
     def play(self, roundNum):
