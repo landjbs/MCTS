@@ -19,9 +19,7 @@ for _ in range(1):
     # plt.show()
     # plt.imshow(o[0, 3, :, :])
     # plt.show()
-    pY = torch.zeros(1, 8, dtype=torch.long)
-    pY[0, 1] = 1
-    vY = 0
-    z.train_step(o, pY, vY)
+    vY = torch.tensor([0], dtype=torch.float)
+    z.train_step(o, 1, vY)
     # x.board.vis()
     # x.play(1000)
