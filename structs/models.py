@@ -30,4 +30,10 @@ class Conv(nn.Module):
         out = self.lin2(out)
         return out
 
-    def train_step(self, x):
+    def train_step(self, x, y):
+        out = self(x)
+        loss = self.criterion(out, y)
+        self.optim.zero_grad()
+        loss.backward()
+        self.optim.step()
+        return loss
