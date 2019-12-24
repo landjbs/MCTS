@@ -17,3 +17,6 @@ for _ in range(1000):
     x.play(1000)
     # x.board.vis()
     # x.play(1000)
+
+
+x.play(1000, vis=True)

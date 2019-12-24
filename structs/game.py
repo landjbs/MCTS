@@ -26,7 +26,6 @@ class Game(object):
             p.shoot(shot, self.board)
             self.check_deaths(p)
         self.board.clear_shots()
-        self.board.vis()
         return True
 
     def check_deaths(self, skip):
@@ -66,10 +65,11 @@ class Game(object):
         self.roundCount += 1
         return False
 
-    def play(self, roundNum):
+    def play(self, roundNum, vis=False):
         while (self.roundCount <= roundNum):
             result = self.play_round()
-            # self.board.vis()
+            if vis:
+                self.board.vis()
             if result:
                 break
                 return result
