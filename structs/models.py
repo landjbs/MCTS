@@ -30,7 +30,8 @@ class Conv(nn.Module):
         self.sig = nn.Sigmoid()
         # optimizers and loss
         self.optim = torch.optim.Adam(self.parameters(), lr=lr)
-        self.criterion = nn.CrossEntropyLoss()
+        self.pCriterion = nn.CrossEntropyLoss()
+        self.vCriterion = nn.BCELoss()
 
     def forward(self, boardTensor):
         convOut = self.conv1(boardTensor)
@@ -42,9 +43,11 @@ class Conv(nn.Module):
         v = self.sig(self.vLin(linOut))
         return p, v
 
-    def train_step(self, x, y):
-        out = self(x)
-        loss = self.criterion(out, y)
+    def train_step(self, x, yP, yV):
+        p, v = self(x)
+        pLoss = self.pCriterion(p, yP)
+        vLoss = self.vCriterion(v, yV)
+        loss = pLoss + vLoss
         self.optim.zero_grad()
         loss.backward()
         self.optim.step()
