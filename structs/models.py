@@ -15,16 +15,19 @@ class Conv(nn.Module):
         super(Conv, self).__init__()
         # layers
         self.conv1 = nn.Sequential(
-            nn.Conv2d(4, 32, kernel_size=2, stride=1, padding=0),
+            nn.Conv2d(4, 32, kernel_size=5, stride=1, padding=0),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2))
         self.conv2 = nn.Sequential(
-            nn.Conv2d(32, 64, kernel_size=5, stride=1, padding=2),
+            nn.Conv2d(32, 64, kernel_size=2, stride=1, padding=0),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2))
         self.dropout = nn.Dropout()
-        self.lin1 = nn.Linear(7 * 7 * 64, 1000)
-        self.lin2 = nn.Linear(1000, 10)
+        self.lin1 = nn.Linear(10 * 10 * 64, 1000)
+        self.pLin = nn.Linear(1000, 8)
+        self.soft = nn.Softmax(dim=8)
+        self.vLin = nn.Linear(1000, 1)
+        self.sig = nn.Sigmoid()
         # optimizers and loss
         self.optim = torch.optim.Adam(self.parameters(), lr=lr)
         self.criterion = nn.CrossEntropyLoss()
