@@ -1,4 +1,5 @@
 import numpy as np
+import torch
 from structs.board import Board
 
 
@@ -13,8 +14,13 @@ class Game(object):
         self.historyTensor = np.concatenate([self.historyTensor,
                                              self.board.board], axis=2)
 
-    def gen_train_tensor(self):
+    def gen_train_tensor(self, p):
         ''' Generates 4th order tensor of current board to train player p '''
+        out = np.zeros(self.board.size+2, self.board.size+2, 4)
+        out[:, :, :3] = self.board
+        out[p.y, p.x, 2] = 0
+        out[p.y, p.x, 3] = 1
+        return torch.tensor(out)
 
     def player_turn(self, p):
         ''' Runs turn for player p. Kills them if they can't move '''
