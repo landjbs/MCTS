@@ -53,6 +53,7 @@ class Bot(Controller):
         pMax = p.topk(1)[1].item()
         if moves[pMax] in validMoves:
             pY = pMax
+            print(moves[pMax])
         else:
             pY = moveGuess
         l = self.nn.eval_and_prop(p, v, pY, 0)

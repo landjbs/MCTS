@@ -5,7 +5,7 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 
-bSize = 18
+bSize = 16
 p1 = Player(1, 1, Bot('p1'))
 p2 = Player(bSize-1, bSize, Dummy('p2'))
 

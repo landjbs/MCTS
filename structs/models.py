@@ -15,15 +15,15 @@ class Conv(nn.Module):
         super(Conv, self).__init__()
         # layers
         self.conv1 = nn.Sequential(
-            nn.Conv2d(4, 256, kernel_size=2, stride=1, padding=0),
+            nn.Conv2d(4, 256, kernel_size=4, stride=1, padding=0),
             nn.ReLU()
             ) #nn.MaxPool2d(kernel_size=2, stride=2)
         self.conv2 = nn.Sequential(
-            nn.Conv2d(256, 256, kernel_size=2, stride=1, padding=0),
+            nn.Conv2d(256, 256, kernel_size=4, stride=1, padding=0),
             nn.ReLU()
             ) #nn.MaxPool2d(kernel_size=2, stride=2)
         self.dropout = nn.Dropout(p=0.3)
-        self.lin1 = nn.Linear(18 * 18 * 256, 1000)
+        self.lin1 = nn.Linear(16 * 16 * 256, 1000)
         self.pLin = nn.Linear(1000, 8)
         self.soft = nn.Softmax(dim=1)
         self.vLin = nn.Linear(1000, 1)
