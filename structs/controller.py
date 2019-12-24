@@ -38,9 +38,9 @@ class Dummy(Controller):
 
 class Bot(Controller):
     ''' Bot-controlled player that learns across games '''
-    def __init__(self, name):
+    def __init__(self, name, lr):
         super(Bot, self).__init__(name)
-        self.nn = Conv(0.0001)
+        self.nn = Conv(lr)
         self.lVec = []
 
     def choose_move(self, validMoves, board):
