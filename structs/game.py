@@ -41,7 +41,7 @@ class Game(object):
         ''' Gives winning conditions to player '''
         # if isinstance(p.controller, Bot):
         #     pass
-        print(f'{p.name} is the winner after {self.roundCount}!')
+        print(f'{p.name} is the winner after {self.roundCount} rounds!')
         p.return_to_start()
         return p
 
@@ -52,7 +52,7 @@ class Game(object):
         self.board.remove_player((p.x, p.y)) == 0
         self.pList.remove(p)
         p.return_to_start()
-        print(f'{p.name} has lost.')
+        print(f'{p.name} has lost after {self.roundCount} rounds.')
         return p
 
     def play_round(self, vis):
