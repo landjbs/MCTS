@@ -68,6 +68,7 @@ class Game(object):
         while (self.roundCount <= roundNum):
             result = self.play_round()
             yield self
+            self.board.vis()
             if result:
                 break
                 return result

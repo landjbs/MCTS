@@ -35,7 +35,7 @@ class Player(object):
     def possible_moves(self, board):
         return board.get_moves((self.x, self.y))
 
-    def dead(self, board):
+    def is_dead(self, board):
         ''' Player checks if it is on laser or wall '''
         return (np.sum(board.board[self.y, self.x, :2]) >= 1)
 
