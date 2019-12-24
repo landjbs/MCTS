@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 bSize = 18
 p1 = Player(1, 1, Bot('p1'))
+p2 = Player(bSize-1, bSize, Dummy('p2'))
 
 # p2 = Player(bSize, bSize, Bot('p2'))
 
@@ -26,5 +27,5 @@ plt.show()
 # plt.show()
 
 for _ in range(10):
-    x = Game([p1], bSize, 0.3)
+    x = Game([p1, p2], bSize, 0.3)
     x.play(1000, vis=True)
