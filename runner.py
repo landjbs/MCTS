@@ -15,6 +15,10 @@ for _ in range(1):
     x = Game([p1, p2], bSize, 0.3)
     o = x.gen_train_tensor(p1)
     # o = torch.tensor(np.zeros(shape=(1, 4, 20, 20)), dtype=torch.float)
+    plt.imshow(o[0, :3, :, :])
+    plt.show()
+    plt.imshow(o[0, 3, :, :])
+    plt.show()
     pY = torch.zeros(8)
     pY[1] = 1
     vY = 0
