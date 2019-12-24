@@ -21,7 +21,7 @@ class Game(object):
         b[p.y, p.x, 2] = 0
         out[0, :3, :, :] = b.reshape((3, 20, 20))
         out[0, 3, p.y, p.x] = 1
-        return torch.tensor(out)
+        return torch.tensor(out, dtype=torch.float)
 
     def player_turn(self, p):
         ''' Runs turn for player p. Kills them if they can't move '''
