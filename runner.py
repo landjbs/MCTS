@@ -13,7 +13,7 @@ p2 = Player(bSize-1, bSize, Dummy('p2'))
 
 for i in range(1000):
     print(i)
-    x = Game([p1], bSize, 0.3)
+    x = Game([p1, p2], bSize, 0.3)
     x.play(1000)
     # x.board.vis()
     # x.play(1000)
