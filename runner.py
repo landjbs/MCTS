@@ -4,7 +4,7 @@ from structs.controller import Human, Dummy, Bot
 from structs.game import Game
 
 
-bSize = 25
+bSize = 20
 p1 = Player(1, 1, Bot('p1'))
 p2 = Player(bSize, bSize, Bot('p2'))
 

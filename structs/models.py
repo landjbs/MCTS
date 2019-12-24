@@ -9,12 +9,13 @@ class Conv(nn.Module):
     current state. To avoid shape issues, p always has length 8. Input board
     is a 4th order tensor with shape (boardSize, boardSize, 4) where the last
     order has indicies (0-shots, 1-walls, 2-enemies, 3-player).
+    Sizes are currently hard-coded.
     '''
-    def __init_(self, lr, boardSize=25):
+    def __init_(self, lr, boardSize=20):
         super(Conv, self).__init__()
         # layers
         self.conv1 = nn.Sequential(
-            nn.Conv2d(4, 32, kernel_size=1, stride=1, padding=0),
+            nn.Conv2d(4, 32, kernel_size=2, stride=1, padding=0),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2))
         self.conv2 = nn.Sequential(

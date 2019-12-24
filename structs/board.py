@@ -41,9 +41,9 @@ class Board(object):
         elif (cp == 1):
             self.board[2:size, 2:size, 1] = 1
         elif (0 < cp < 1):
-            coverNum = floor(cp * (self.max)**2)
-            xCover = np.random.randint(2, self.max, coverNum)
-            yCover = np.random.randint(2, self.max, coverNum)
+            coverNum = floor(cp * (self.size)**2)
+            xCover = np.random.randint(2, self.size, coverNum)
+            yCover = np.random.randint(2, self.size, coverNum)
             self.board[yCover, xCover, 1] = 1
         else:
             raise ValueError(f'Expected cp in range [0, 1], but found {cp}.')
