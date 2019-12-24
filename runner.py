@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 bSize = 18
 p1 = Player(1, 1, Bot('p1', 0.000001))
-p2 = Player(bSize-1, bSize, Dummy('p2'))
+p2 = Player(bSize, bSize, Dummy('p2'))
 
 # p2 = Player(bSize, bSize, Bot('p2'))
 

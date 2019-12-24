@@ -15,7 +15,7 @@ class Conv(nn.Module):
         super(Conv, self).__init__()
         # layers
         self.conv1 = nn.Sequential(
-            nn.Conv2d(4, 256, kernel_size=4, stride=1, padding=0),
+            nn.Conv2d(1, 256, kernel_size=4, stride=1, padding=0),
             nn.ReLU()
             ) #nn.MaxPool2d(kernel_size=2, stride=2)
         self.conv2 = nn.Sequential(

@@ -29,8 +29,6 @@ class Player(object):
         out = np.zeros((1, board.size+2, board.size+2))
         b = board.board.copy()
         b = np.sum(b, axis=2)
-        plt.imshow(board)
-        plt.show()
         out[0, :, :] = b.reshape((1, board.size+2, board.size+2))
         return torch.tensor(out, dtype=torch.float)
 
