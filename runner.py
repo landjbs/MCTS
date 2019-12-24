@@ -18,5 +18,7 @@ for _ in range(1000):
     # x.board.vis()
     # x.play(1000)
 
-
-x.play(1000, vis=True)
+t='y'
+while (t == 'y'):
+    x.play(1000, vis=True)
+    t = input('Continue? y/n: ')

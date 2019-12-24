@@ -41,6 +41,7 @@ class Bot(Controller):
     def __init__(self, name):
         super(Bot, self).__init__(name)
         self.nn = Conv(0.0001)
+        self.lVec = []
 
     def choose_move(self, validMoves, board):
         # i = np.random.randint(0, len(moveList))
@@ -54,7 +55,8 @@ class Bot(Controller):
             pY = pMax
         else:
             pY = moveGuess
-        self.nn.eval_and_prop(p, v, pY, 1)
+        l = self.nn.eval_and_prop(p, v, pY, 0)
+        self.lVec.append(l)
         move = moves[pMax]
         return move
 
