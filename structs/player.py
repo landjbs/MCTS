@@ -15,7 +15,7 @@ class Player(object):
 
     def gen_board_tensor(self, board):
         ''' Generates 4th order tensor of current board to train player '''
-        out = np.zeros((1, 4, board.board.size+2, board.board.size+2))
+        out = np.zeros((1, 4, board.size+2, board.size+2))
         b = board.board.copy()
         b[self.y, self.x, 2] = 0
         out[0, :3, :, :] = b.reshape((3, 20, 20))

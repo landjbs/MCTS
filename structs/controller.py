@@ -42,14 +42,14 @@ class Bot(Controller):
         super(Bot, self).__init__(name)
         self.nn = Conv(0.0001)
 
-    def choose_move(self, validMoves, board, boardTensor):
+    def choose_move(self, validMoves, board):
         # i = np.random.randint(0, len(moveList))
         # return moveList[i]
         moveGuess = np.random.randint(0, len(validMoves))
         moves = [(-1, -1), (0, -1), (1, -1), (-1, 0),
                  (1, 0), (-1, 1), (0, 1), (1, 1)]
         p, v = self.nn.forward(board)
-        pY = moves.index(moveGuess)
+        pY = moves.index(moves[moveGuess])
         self.nn.eval_and_prop(p, v, pY, 1)
         pMax = max(p)
         return pMax

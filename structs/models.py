@@ -50,8 +50,8 @@ class Conv(nn.Module):
         return p, v
 
     def eval_and_prop(self, pX, vX, pY, vY):
-        pLoss = self.pCriterion(pX, yP)
-        vLoss = self.vCriterion(vX, yV)
+        pLoss = self.pCriterion(pX, pY)
+        vLoss = self.vCriterion(vX, torch.tensor([vY], dtype=torch.float))
         loss = pLoss + vLoss
         self.optim.zero_grad()
         loss.backward()
