@@ -22,7 +22,7 @@ class Conv(nn.Module):
             nn.Conv2d(32, 64, kernel_size=2, stride=1, padding=0),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2))
-        self.dropout = nn.Dropout()
+        self.dropout = nn.Dropout(p=0.3)
         self.lin1 = nn.Linear(10 * 10 * 64, 1000)
         self.pLin = nn.Linear(1000, 8)
         self.soft = nn.Softmax(dim=8)
@@ -32,16 +32,15 @@ class Conv(nn.Module):
         self.optim = torch.optim.Adam(self.parameters(), lr=lr)
         self.criterion = nn.CrossEntropyLoss()
 
-    # def calc_padding(self):
-
     def forward(self, x):
-        out = self.conv1(x)
-        out = self.conv2(x)
-        out = out.reshape(out.size(0), -1)
-        out = self.dropout(out)
-        out = self.lin1(out)
-        out = self.lin2(out)
-        return out
+        convOut = self.conv1(x)
+        convOut = self.conv2(convOut)
+        convOut = convOut.reshape(convOut.size(0), -1)
+        convOut = self.dropout(convOut)
+        linOut = self.lin1(convOut)
+        p = self.soft(self.pLin(linOut))
+        v = self.sig(self.vLin(linOut))
+        return p, v
 
     def train_step(self, x, y):
         out = self(x)
