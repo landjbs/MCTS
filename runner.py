@@ -12,11 +12,19 @@ bSize = 18
 p1 = Player(1, 1, Bot('p1'))
 p2 = Player(bSize, bSize, Bot('p2'))
 
-for _ in range(1000):
+for _ in range(100000):
     x = Game([p1, p2], bSize, 0.3)
     x.play(1000)
     # x.board.vis()
     # x.play(1000)
+
+plt.plot(p1.controller.lVec)
+plt.title(p1.name)
+plt.show()
+
+plt.plot(p2.controller.lVec)
+plt.title(p2.name)
+plt.show()
 
 t='y'
 while (t == 'y'):

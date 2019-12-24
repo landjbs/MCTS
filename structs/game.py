@@ -28,7 +28,7 @@ class Game(object):
         self.board.clear_shots()
         return True
 
-    def check_deaths(self, skip):
+    def check_deaths(self, skip=None):
         '''
         Checks if any of the players are hit by a shot.
         Runs after any shot and kills any shot players.
@@ -56,10 +56,13 @@ class Game(object):
         print(f'{p.name} has lost.')
         return p
 
-    def play_round(self):
+    def play_round(self, vis):
         ''' Plays round returns player object if done and false otherwise '''
         for p in self.pList:
             self.player_turn(p)
+            if vis:
+                self.board.vis()
+            self.check_deaths()
             if (len(self.pList) == 1):
                 return self.win(self.pList[0])
         self.roundCount += 1
@@ -67,9 +70,7 @@ class Game(object):
 
     def play(self, roundNum, vis=False):
         while (self.roundCount <= roundNum):
-            result = self.play_round()
-            if vis:
-                self.board.vis()
+            result = self.play_round(vis=vis)
             if result:
                 break
                 return result
