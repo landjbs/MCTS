@@ -1,3 +1,5 @@
+import torch
+
 class Player(object):
     ''' Base player class to be inherited by Human and Bot '''
     def __init__(self, x, y, controller):
@@ -9,6 +11,15 @@ class Player(object):
         self.oX = x
         self.oY = y
         self.controller = controller
+
+    def gen_board_tensor(self, board):
+        ''' Generates 4th order tensor of current board to train player '''
+        out = np.zeros((1, 4, board.size+2, board.size+2))
+        b = self.board.board.copy()
+        b[self.y, self.x, 2] = 0
+        out[0, :3, :, :] = b.reshape((3, 20, 20))
+        out[0, 3, self.y, self.x] = 1
+        return torch.tensor(out, dtype=torch.float)
 
     def move(self, dx, dy, board):
         nX, nY = self.x + dx, self.y + dy
@@ -27,6 +38,11 @@ class Player(object):
         return (board.board[self.y, self.x, 0] == 1)
 
     def choose_move(self, board):
+        moveList = self.board.get_moves((self.y, self.x))
+        if len(moveList)==0:
+            return False
+        if isinstance(self.controller, Bot):
+            board = self.gen_board_tensor(board)
         moveChoice = self.controller.choose_move(moveList, board)
         return moveChoice
 
