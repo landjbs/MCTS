@@ -1,4 +1,5 @@
 import torch
+import numpy as np
 from structs.controller import *
 
 class Player(object):
@@ -34,9 +35,9 @@ class Player(object):
     def possible_moves(self, board):
         return board.get_moves((self.x, self.y))
 
-    def is_shot(self, board):
-        ''' Player checks if it is on laser '''
-        return (board.board[self.y, self.x, 0] == 1)
+    def dead(self, board):
+        ''' Player checks if it is on laser or wall '''
+        return (np.sum(board.board[self.y, self.x, :2]) >= 1)
 
     def choose_move(self, board):
         moveList = board.get_moves((self.y, self.x))

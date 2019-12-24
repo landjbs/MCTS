@@ -34,21 +34,21 @@ class Game(object):
         '''
         for p in self.pList:
             if p != skip:
-                if p.is_shot(self.board):
+                if p.is_dead(self.board):
                     self.lose(p)
 
     def win(self, p):
         ''' Gives winning conditions to player '''
-        if isinstance(p.controller, Bot):
-            pass
+        # if isinstance(p.controller, Bot):
+        #     pass
         print(f'{p.name} is the winner!')
         p.return_to_start()
         return p
 
     def lose(self, p):
         ''' Gives losing conditions to player '''
-        if isinstance(p.controller, Bot):
-            pass
+        # if isinstance(p.controller, Bot):
+        #     pass
         self.board.remove_player((p.x, p.y)) == 0
         self.pList.remove(p)
         p.return_to_start()

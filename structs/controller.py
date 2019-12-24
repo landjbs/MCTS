@@ -51,8 +51,9 @@ class Bot(Controller):
         p, v = self.nn.forward(board)
         pY = moves.index(moves[moveGuess])
         self.nn.eval_and_prop(p, v, pY, 1)
-        pMax = max(p)
-        return pMax
+        pMax = p.topk(1)[1].item()
+        move = moves[pMax]
+        return move
 
     def choose_shot(self, board):
         i = np.random.randint(0, 5)
