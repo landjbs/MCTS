@@ -49,9 +49,12 @@ class Bot(Controller):
         moves = [(-1, -1), (0, -1), (1, -1), (-1, 0),
                  (1, 0), (-1, 1), (0, 1), (1, 1)]
         p, v = self.nn.forward(board)
-        pY = moves.index(moves[moveGuess])
-        self.nn.eval_and_prop(p, v, pY, 1)
         pMax = p.topk(1)[1].item()
+        if moves[pMax] in validMoves:
+            pY = pMax
+        else:
+            pY = moveGuess
+        self.nn.eval_and_prop(p, v, pY, 1)
         move = moves[pMax]
         return move
 

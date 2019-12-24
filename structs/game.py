@@ -17,14 +17,16 @@ class Game(object):
     def player_turn(self, p):
         ''' Runs turn for player p. Kills them if they can't move '''
         move = p.choose_move(self.board)
-        if not move:
+        if (move==False):
             self.lose(p)
+            return False
         p.move(move[0], move[1], self.board)
         shot = p.choose_shot(self.board)
         if shot:
             p.shoot(shot, self.board)
             self.check_deaths(p)
         self.board.clear_shots()
+        self.board.vis()
         return True
 
     def check_deaths(self, skip):
@@ -67,7 +69,7 @@ class Game(object):
     def play(self, roundNum):
         while (self.roundCount <= roundNum):
             result = self.play_round()
-            self.board.vis()
+            # self.board.vis()
             if result:
                 break
                 return result
