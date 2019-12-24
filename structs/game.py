@@ -14,15 +14,6 @@ class Game(object):
         self.historyTensor = np.concatenate([self.historyTensor,
                                              self.board.board], axis=2)
 
-    def gen_train_tensor(self, p):
-        ''' Generates 4th order tensor of current board to train player p '''
-        out = np.zeros((1, 4, self.board.size+2, self.board.size+2))
-        b = self.board.board.copy()
-        b[p.y, p.x, 2] = 0
-        out[0, :3, :, :] = b.reshape((3, 20, 20))
-        out[0, 3, p.y, p.x] = 1
-        return torch.tensor(out, dtype=torch.float)
-
     def player_turn(self, p):
         ''' Runs turn for player p. Kills them if they can't move '''
         move = p.choose_move(self.board)

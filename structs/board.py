@@ -22,7 +22,7 @@ class Board(object):
         self.max = size - 1
         self.board = np.zeros((size+2, size+2, 3))
         # add walls
-        # TODO: add rules such that size scales with player number
+        # TODO: add rules such that mandated size scales with player number
         if (size > 3):
             pass
         elif (size == 3):
@@ -30,8 +30,6 @@ class Board(object):
                 raise ValueError('Boards with size 3 must have cp in [0, 1].')
         else:
             raise ValueError('size must be greater than 3.')
-
-        # elif size <=
         self.board[0:, 0, 1] = 1
         self.board[0, 0:, 1] = 1
         self.board[0:, size+1, 1] = 1

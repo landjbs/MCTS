@@ -1,4 +1,5 @@
 import torch
+from structs.controller import *
 
 class Player(object):
     ''' Base player class to be inherited by Human and Bot '''
@@ -14,8 +15,8 @@ class Player(object):
 
     def gen_board_tensor(self, board):
         ''' Generates 4th order tensor of current board to train player '''
-        out = np.zeros((1, 4, board.size+2, board.size+2))
-        b = self.board.board.copy()
+        out = np.zeros((1, 4, board.board.size+2, board.board.size+2))
+        b = board.board.copy()
         b[self.y, self.x, 2] = 0
         out[0, :3, :, :] = b.reshape((3, 20, 20))
         out[0, 3, self.y, self.x] = 1
@@ -38,7 +39,7 @@ class Player(object):
         return (board.board[self.y, self.x, 0] == 1)
 
     def choose_move(self, board):
-        moveList = self.board.get_moves((self.y, self.x))
+        moveList = board.get_moves((self.y, self.x))
         if len(moveList)==0:
             return False
         if isinstance(self.controller, Bot):
