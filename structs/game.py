@@ -13,6 +13,9 @@ class Game(object):
         self.historyTensor = np.concatenate([self.historyTensor,
                                              self.board.board], axis=2)
 
+    def gen_train_tensor(self):
+        ''' Generates 4th order tensor of current board to train player p '''
+
     def player_turn(self, p):
         ''' Runs turn for player p. Kills them if they can't move '''
         move = p.choose_move(self.board)
@@ -62,12 +65,6 @@ class Game(object):
                 return self.win(self.pList[0])
         self.roundCount += 1
         return False
-
-    def vis_history(self):
-        for i in self.historyTensor:
-            plt.imshow(i)
-            plt.show()
-            plt.close()
 
     def play(self, roundNum):
         while (self.roundCount <= roundNum):
