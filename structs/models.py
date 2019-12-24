@@ -32,8 +32,8 @@ class Conv(nn.Module):
         self.optim = torch.optim.Adam(self.parameters(), lr=lr)
         self.criterion = nn.CrossEntropyLoss()
 
-    def forward(self, x):
-        convOut = self.conv1(x)
+    def forward(self, boardTensor):
+        convOut = self.conv1(boardTensor)
         convOut = self.conv2(convOut)
         convOut = convOut.reshape(convOut.size(0), -1)
         convOut = self.dropout(convOut)
