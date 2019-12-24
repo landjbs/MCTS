@@ -18,7 +18,11 @@ class Human(Controller):
         super(Human, self).__init__(name)
 
     def choose_move(self, moveList, board):
-        pass
+        moveList = self.possible_moves(board)
+        if len(moveList) == 0:
+            return None
+        i = np.random.randint(0, len(moveList))
+        return moveList[i]
 
     def choose_shot(self, board):
         pass
@@ -43,14 +47,15 @@ class Bot(Controller):
         self.nn = Conv(0.0001)
 
     def choose_move(self, validMoves, board):
-        # i = np.random.randint(0, len(moveList))
-        # return moveList[i]
-        moveGuess = np.random.choice(validMoves)
+        #
+        moveGuess = np.random.randint(0, len(validMoves))
         moves = [(-1, -1), (0, -1), (1, -1), (-1, 0),
                  (1, 0), (-1, 1), (0, 1), (1, 1)]
-        p,v  = self.nn.forward(board)
-        pMax = max(p)
+        p, v = self.nn.forward(board)
         pY = moves.index(moveGuess)
+        self.nn.eval_and_prop(p, v, pY, 1)
+        pMax = max(p)
+        return pMax
 
     def choose_shot(self, board):
         i = np.random.randint(0, 5)

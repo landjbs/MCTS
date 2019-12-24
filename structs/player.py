@@ -27,10 +27,6 @@ class Player(object):
         return (board.board[self.y, self.x, 0] == 1)
 
     def choose_move(self, board):
-        moveList = self.possible_moves(board)
-        print(moveList)
-        if len(moveList) == 0:
-            return None
         moveChoice = self.controller.choose_move(moveList, board)
         return moveChoice
 

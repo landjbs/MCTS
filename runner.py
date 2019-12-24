@@ -15,9 +15,9 @@ p2 = Player(bSize, bSize, Bot('p2'))
 for _ in range(1000):
     x = Game([p1, p2], bSize, 0.3)
     for state in x.play(1000):
-        o = state.gen_train_tensor(p1)
-        vY = torch.tensor([0], dtype=torch.float)
-        l = z.train_step(o, 1, vY)
-        print(l.item())
+        # o = state.gen_train_tensor(p1)
+        # vY = torch.tensor([0], dtype=torch.float)
+        # l = z.train_step(o, 1, vY)
+        x.board.vis()
     # x.board.vis()
     # x.play(1000)
