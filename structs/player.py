@@ -23,6 +23,18 @@ class Player(object):
         out[0, 3, self.y, self.x] = 1
         return torch.tensor(out, dtype=torch.float)
 
+    def gen_board_tensor(self, board):
+        ''' Generates flat board tensor where everything looks like walls '''
+        out = np.zeros((1, board.size+2, board.size+2))
+
+    def gen_local_tensor(self, board):
+        ''' Generates 4th order tensor of area around self '''
+        out = np.zeros((3, 3))
+        b = board.board.copy()
+        # TODO: finish
+        return None
+
+
     def move(self, dx, dy, board):
         nX, nY = self.x + dx, self.y + dy
         board.move_player((nY, nX), (self.y, self.x))
