@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 from structs.controller import *
+import matplotlib.pyplot as plt
 
 class Player(object):
     ''' Base player class to be inherited by Human and Bot '''
@@ -26,6 +27,12 @@ class Player(object):
     def gen_board_tensor(self, board):
         ''' Generates flat board tensor where everything looks like walls '''
         out = np.zeros((1, board.size+2, board.size+2))
+        b = board.board.copy()
+        b = np.sum(b, axis=2)
+        plt.imshow(board)
+        plt.show()
+        out[0, :, :] = b.reshape((1, board.size+2, board.size+2))
+        return torch.tensor(out, dtype=torch.float)
 
     def gen_local_tensor(self, board):
         ''' Generates 4th order tensor of area around self '''
