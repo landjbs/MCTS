@@ -25,7 +25,6 @@ class Game(object):
         if shot:
             p.shoot(shot, self.board)
             self.check_deaths(p)
-        self.board.clear_shots()
         return True
 
     def check_deaths(self, skip=None):
@@ -42,7 +41,7 @@ class Game(object):
         ''' Gives winning conditions to player '''
         # if isinstance(p.controller, Bot):
         #     pass
-        print(f'{p.name} is the winner!')
+        print(f'{p.name} is the winner after {self.roundCount}!')
         p.return_to_start()
         return p
 
@@ -65,6 +64,7 @@ class Game(object):
             self.check_deaths()
             if (len(self.pList) == 1):
                 return self.win(self.pList[0])
+        self.board.clear_shots()
         self.roundCount += 1
         return False
 
