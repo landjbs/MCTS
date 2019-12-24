@@ -3,13 +3,18 @@ import torch.nn as nn
 
 
 class Conv(nn.Module):
+    '''
+    The Conv model is tasked with prediciting a vector (p) of move probabilities
+    across the avaliable moves and a scalar (v) of win probability at the
+    current state. To avoid shape issues, p always has length 8. 
+    '''
     def __init_(self, lr):
         super(Conv, self).__init__()
         # layers
         self.conv1 = nn.Sequential(
             nn.Conv2d(1, 32, kernel_size=5, stride=1, padding=2),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2))
+            nn.MaxPool2d(kernel_size=1, stride=1))
         self.conv2 = nn.Sequential(
             nn.Conv2d(32, 64, kernel_size=5, stride=1, padding=2),
             nn.ReLU(),
