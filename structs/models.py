@@ -11,8 +11,8 @@ class Conv(nn.Module):
     order has indicies (0-shots, 1-walls, 2-enemies, 3-player).
     Sizes are currently hard-coded.
     '''
-    def __init_(self, lr, boardSize=20):
-        super(Conv, self).__init__(lr)
+    def __init__(self, lr, boardSize=20):
+        super(Conv, self).__init__()
         # layers
         self.conv1 = nn.Sequential(
             nn.Conv2d(4, 32, kernel_size=5, stride=1, padding=0),
