@@ -25,7 +25,7 @@ class Conv(nn.Module):
         self.dropout = nn.Dropout(p=0.3)
         self.lin1 = nn.Linear(3 * 3 * 64, 1000)
         self.pLin = nn.Linear(1000, 8)
-        self.soft = nn.Softmax()
+        self.soft = nn.Softmax(dim=1)
         self.vLin = nn.Linear(1000, 1)
         self.sig = nn.Sigmoid()
         # optimizers and loss
@@ -33,16 +33,21 @@ class Conv(nn.Module):
         self.pCriterion = nn.CrossEntropyLoss()
         self.vCriterion = nn.BCELoss()
 
+    def pCriterion(self, p, target):
+        pC = p[target]
+        pLog = torch.log(pC)
+        loss = -(pLog)
+        return loss
+
     def forward(self, boardTensor):
         convOut = self.conv1(boardTensor)
         convOut = self.conv2(convOut)
         convOut = convOut.reshape(convOut.size(0), -1)
         convOut = self.dropout(convOut)
         linOut = self.lin1(convOut)
-        p = self.soft(self.pLin(linOut))[0]
+        p = self.soft(self.pLin(linOut))
         v = self.sig(self.vLin(linOut))
         print(p)
-        print(v)
         return p, v
 
     def train_step(self, x, yP, yV):
