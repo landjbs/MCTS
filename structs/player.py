@@ -19,7 +19,7 @@ class Player(object):
         out = np.zeros((1, 4, board.size+2, board.size+2))
         b = board.board.copy()
         b[self.y, self.x, 2] = 0
-        out[0, :3, :, :] = b.reshape((3, 20, 20))
+        out[0, :3, :, :] = b.reshape((3, board.size+2, board.size+2))
         out[0, 3, self.y, self.x] = 1
         return torch.tensor(out, dtype=torch.float)
 

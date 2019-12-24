@@ -21,6 +21,7 @@ class Game(object):
             self.lose(p)
             return False
         p.move(move[0], move[1], self.board)
+        self.check_deaths()
         shot = p.choose_shot(self.board)
         if shot:
             p.shoot(shot, self.board)

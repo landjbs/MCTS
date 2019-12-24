@@ -5,7 +5,7 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 
-bSize = 16
+bSize = 18
 p1 = Player(1, 1, Bot('p1'))
 p2 = Player(bSize-1, bSize, Dummy('p2'))
 
@@ -13,7 +13,7 @@ p2 = Player(bSize-1, bSize, Dummy('p2'))
 
 for i in range(1000):
     print(i)
-    x = Game([p1, p2], bSize, 0.3)
+    x = Game([p1, p2], bSize, 0)
     x.play(1000)
     # x.board.vis()
     # x.play(1000)
@@ -27,5 +27,6 @@ plt.show()
 # plt.show()
 
 for _ in range(10):
+    print('hire')
     x = Game([p1, p2], bSize, 0.3)
     x.play(1000, vis=True)

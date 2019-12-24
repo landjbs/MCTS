@@ -23,7 +23,7 @@ class Conv(nn.Module):
             nn.ReLU()
             ) #nn.MaxPool2d(kernel_size=2, stride=2)
         self.dropout = nn.Dropout(p=0.3)
-        self.lin1 = nn.Linear(16 * 16 * 256, 1000)
+        self.lin1 = nn.Linear(14 * 14 * 256, 1000)
         self.pLin = nn.Linear(1000, 8)
         self.soft = nn.Softmax(dim=1)
         self.vLin = nn.Linear(1000, 1)
