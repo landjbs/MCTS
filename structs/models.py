@@ -47,7 +47,6 @@ class Conv(nn.Module):
         linOut = self.lin1(convOut)
         p = self.soft(self.pLin(linOut))
         v = self.sig(self.vLin(linOut))[0]
-        print(v)
         return p, v
 
     def train_step(self, x, yP, yV):

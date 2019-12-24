@@ -76,6 +76,7 @@ class Game(object):
     def play(self, roundNum):
         while (self.roundCount <= roundNum):
             result = self.play_round()
+            yield self
             if result:
                 break
                 return result
