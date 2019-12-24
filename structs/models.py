@@ -12,7 +12,7 @@ class Conv(nn.Module):
     Sizes are currently hard-coded.
     '''
     def __init_(self, lr, boardSize=20):
-        super(Conv, self).__init__()
+        super(Conv, self).__init__(lr)
         # layers
         self.conv1 = nn.Sequential(
             nn.Conv2d(4, 32, kernel_size=5, stride=1, padding=0),

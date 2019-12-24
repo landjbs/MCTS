@@ -3,6 +3,7 @@ from structs.player import Player
 from structs.controller import Human, Dummy, Bot
 from structs.game import Game
 
+z = Conv(0.001)
 
 bSize = 20
 p1 = Player(1, 1, Bot('p1'))
@@ -10,5 +11,13 @@ p2 = Player(bSize, bSize, Bot('p2'))
 
 for _ in range(1):
     x = Game([p1, p2], bSize, 0.3)
-    x.board.vis()
-    x.play(1000)
+    o = x.gen_train_tensor(p1)
+    import matplotlib.pyplot as plt
+    plt.imshow(o[:,:,:3])
+    plt.show()
+    pY = torch.zeros(8)
+    pY[1] = 1
+    vY = 0
+    z.train_step(o, pY, pV)
+    # x.board.vis()
+    # x.play(1000)
