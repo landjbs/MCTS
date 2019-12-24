@@ -49,6 +49,15 @@ class Conv(nn.Module):
         v = self.sig(self.vLin(linOut))[0]
         return p, v
 
+    def eval_and_prop(self, pX, vX, pY, vY):
+        pLoss = self.pCriterion(pX, yP)
+        vLoss = self.vCriterion(vX, yV)
+        loss = pLoss + vLoss
+        self.optim.zero_grad()
+        loss.backward()
+        self.optim.step()
+        return loss
+
     def train_step(self, x, yP, yV):
         p, v = self(x)
         pLoss = self.pCriterion(p, yP)

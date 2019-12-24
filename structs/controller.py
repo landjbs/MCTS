@@ -1,4 +1,5 @@
 import numpy as np
+from structs.models import Conv
 
 class Controller(object):
     def __init__(self, name):
@@ -39,10 +40,17 @@ class Bot(Controller):
     ''' Bot-controlled player that learns across games '''
     def __init__(self, name):
         super(Bot, self).__init__(name)
+        self.nn = Conv(0.0001)
 
-    def choose_move(self, moveList, board):
-        i = np.random.randint(0, len(moveList))
-        return moveList[i]
+    def choose_move(self, validMoves, board):
+        # i = np.random.randint(0, len(moveList))
+        # return moveList[i]
+        moveGuess = np.random.choice(validMoves)
+        moves = [(-1, -1), (0, -1), (1, -1), (-1, 0),
+                 (1, 0), (-1, 1), (0, 1), (1, 1)]
+        p,v  = self.nn.forward(board)
+        pMax = max(p)
+        pY = moves.index(moveGuess)
 
     def choose_shot(self, board):
         i = np.random.randint(0, 5)
