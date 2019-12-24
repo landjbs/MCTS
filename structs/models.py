@@ -60,10 +60,4 @@ class Conv(nn.Module):
 
     def train_step(self, x, yP, yV):
         p, v = self(x)
-        pLoss = self.pCriterion(p, yP)
-        vLoss = self.vCriterion(v, yV)
-        loss = pLoss + vLoss
-        self.optim.zero_grad()
-        loss.backward()
-        self.optim.step()
-        return loss
+        return self.eval_and_prop(p, v, yP, yV)
