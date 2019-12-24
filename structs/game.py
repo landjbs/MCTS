@@ -17,8 +17,9 @@ class Game(object):
     def gen_train_tensor(self, p):
         ''' Generates 4th order tensor of current board to train player p '''
         out = np.zeros((1, 4, self.board.size+2, self.board.size+2))
-        out[0, :3, :, :] = self.board.board.reshape((3, 20, 20))
-        out[0, 2, p.y, p.x] = 0
+        b = self.board.board.copy()
+        b[p.y, p.x, 2] = 0
+        out[0, :3, :, :] = b.reshape((3, 20, 20))
         out[0, 3, p.y, p.x] = 1
         return torch.tensor(out)
 
