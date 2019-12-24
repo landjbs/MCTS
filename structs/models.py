@@ -23,9 +23,9 @@ class Conv(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2))
         self.dropout = nn.Dropout(p=0.3)
-        self.lin1 = nn.Linear(10 * 10 * 64, 1000)
+        self.lin1 = nn.Linear(3 * 3 * 64, 1000)
         self.pLin = nn.Linear(1000, 8)
-        self.soft = nn.Softmax(dim=8)
+        self.soft = nn.Softmax()
         self.vLin = nn.Linear(1000, 1)
         self.sig = nn.Sigmoid()
         # optimizers and loss
@@ -39,8 +39,10 @@ class Conv(nn.Module):
         convOut = convOut.reshape(convOut.size(0), -1)
         convOut = self.dropout(convOut)
         linOut = self.lin1(convOut)
-        p = self.soft(self.pLin(linOut))
+        p = self.soft(self.pLin(linOut))[0]
         v = self.sig(self.vLin(linOut))
+        print(p)
+        print(v)
         return p, v
 
     def train_step(self, x, yP, yV):
