@@ -8,8 +8,8 @@ from collections import defaultdict
 
 class Node(object):
     ''' Node Monte Carlo Tree Search '''
-    def __init__(self, player, parent=None):
-        self.player = player
+    def __init__(self, state, parent=None):
+        self.state = state
         self.parent = parent
         self.children = []
         self.visitNum = 0
@@ -19,14 +19,14 @@ class Node(object):
     def load_unexplored(self):
         ''' Load unexplored actions from node '''
         if (self.unexplored == None):
-            self.unexplored = self.player.board.get_moves((self.player.y,
-                                                           self.player.x))
+            self.unexplored = self.state.board.get_moves((self.state.y,
+                                                           self.state.x))
         return self.unexplored
 
     def q(self):
         ''' Calcs q value of current state '''
-        wins = self.results[self.parent.player.pId]
-        losses = self.results[-1 *  self.parent.player.pId]
+        wins = self.results[self.parent.state.pId]
+        losses = self.results[-1 *  self.parent.state.pId]
         return wins - lossesa
 
     def n(self):
@@ -35,6 +35,10 @@ class Node(object):
 
     def expand(self):
         ''' Expand state '''
+        a = self.unexplored.pop()
+        nextState = self.state.move((a[0], a[1]))
+        child = Node(state=nextState, parent=self)
+        self.children.append(child)
 
 
 class MCTS(object):
