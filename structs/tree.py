@@ -19,8 +19,7 @@ class Node(object):
     def load_unexplored(self):
         ''' Load unexplored actions from node '''
         if (self.unexplored == None):
-            self.unexplored = self.state.board.get_moves((self.state.y,
-                                                           self.state.x))
+            self.unexplored = self.state.possible_moves()
         return self.unexplored
 
     def q(self):
@@ -41,11 +40,12 @@ class Node(object):
         self.children.append(child)
         return child
 
-    def is_terminal(self):
-        return (self.state.board.get_moves((self.state.y, self.state.x)) == [])
+    # def is_terminal(self):
+    #     return self.
 
     def rollout(self):
         curState = self.state
+        moves = self.state.board.
 
 class MCTS(object):
     ''' Runs a single MCTS from current position on board '''
