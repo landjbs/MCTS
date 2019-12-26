@@ -25,14 +25,6 @@ class Player(object):
         return torch.tensor(out, dtype=torch.float)
 
     def gen_board_tensor(self, board):
-        ''' Generates flat board tensor where everything looks like walls '''
-        out = np.zeros((1, 1, board.size+2, board.size+2))
-        b = board.board.copy()
-        b = np.sum(b, axis=2)
-        out[0, 0, :, :] = b.reshape((1, 1, board.size+2, board.size+2))
-        return torch.tensor(out, dtype=torch.float)
-
-    def gen_board_tensor(self, board):
         ''' Generates 4th order tensor of area around self '''
         out = np.zeros((1, 4, 3, 3))
         b = board.board.copy()

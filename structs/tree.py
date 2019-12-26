@@ -2,15 +2,18 @@ from collections import defaultdict
 
 class Node(object):
     ''' Node Monte Carlo Tree Search '''
-    def __init__(self, state, parent=None):
-        self.state = state
+    def __init__(self, board, parent=None):
+        self.board = board
         self.parent = parent
         self.children = []
         self.visitNum = 0
         self.results = defaultdict(int)
         self.unexplored = None
 
-
+    def load_unexplored(self):
+        ''' Load unexplored actions from node '''
+        if (self.unexplored == None):
+            self.unexplored = self.board.get_moves()
 
 
 class MCTS(object):
