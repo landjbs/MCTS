@@ -1,9 +1,14 @@
+from collections import defaultdict
+
 class Node(object):
     ''' Node Monte Carlo Tree Search '''
     def __init__(self, state, parent=None):
         self.state = state
         self.parent = parent
         self.children = []
+        self.visitNum = 0
+        self.results = defaultdict(int)
+        self.unexplored = None
 
 
 
