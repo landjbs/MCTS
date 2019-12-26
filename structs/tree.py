@@ -1,5 +1,9 @@
 class Node(object):
     ''' Node Monte Carlo Tree Search '''
+    def __init__(self, state, parent=None):
+        self.state = state
+        self.parent = parent
+        self.children = []
 
 
 
