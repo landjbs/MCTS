@@ -4,4 +4,7 @@ class MCTS(object):
         self.loc = loc
         self.board = board
 
-    def 
+    def run_search(self):
+        moves = self.board.get_moves(self.loc)
+        while len(moves) > 0:
+            
