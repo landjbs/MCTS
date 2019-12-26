@@ -50,6 +50,13 @@ class Player(object):
         ''' Player checks if it is on laser or wall '''
         return (np.sum(board.board[self.y, self.x, :2]) >= 1)
 
+    def possible_moves(self):
+        moveList = board.get_moves((self.y, self.x))
+        if moveList != []:
+            return moveList
+        else:
+            return None 
+
     def choose_move(self, board):
         moveList = board.get_moves((self.y, self.x))
         if len(moveList)==0:
