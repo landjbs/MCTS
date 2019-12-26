@@ -44,6 +44,8 @@ class Node(object):
     def is_terminal(self):
         return (self.state.board.get_moves((self.state.y, self.state.x)) == [])
 
+    def rollout(self):
+        curState = self.state
 
 class MCTS(object):
     ''' Runs a single MCTS from current position on board '''
