@@ -1,3 +1,9 @@
+'''
+Heavy inspiration from:
+https://github.com/int8/monte-carlo-tree-search/blob/master/mctspy/tree/nodes.py
+'''
+
+
 from collections import defaultdict
 
 class Node(object):
@@ -17,12 +23,18 @@ class Node(object):
                                                            self.player.x))
         return self.unexplored
 
-    def calc_q(self):
+    def q(self):
         ''' Calcs q value of current state '''
         wins = self.results[self.parent.player.pId]
         losses = self.results[-1 *  self.parent.player.pId]
-        return wins - losses
+        return wins - lossesa
 
+    def n(self):
+        ''' Returns n value of current state '''
+        return self.visitNum
+
+    def expand(self):
+        ''' Expand state '''
 
 
 class MCTS(object):
