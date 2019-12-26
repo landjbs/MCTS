@@ -7,4 +7,8 @@ class MCTS(object):
     def run_search(self):
         moves = self.board.get_moves(self.loc)
         while len(moves) > 0:
-            
+            moves = self.board.get_moves(self.loc)
+
+    def choose_max(self, moveList):
+        ''' Choose moves with maximal score '''
+        pass
