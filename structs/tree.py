@@ -19,7 +19,11 @@ class Node(object):
 
     def calc_q(self):
         ''' Calcs q value of current state '''
-        pass
+        wins = self.results[self.parent.player.pId]
+        losses = self.results[-1 *  self.parent.player.pId]
+        return wins - losses
+
+
 
 class MCTS(object):
     ''' Runs a single MCTS from current position on board '''
