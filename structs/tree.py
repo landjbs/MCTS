@@ -41,6 +41,9 @@ class Node(object):
         self.children.append(child)
         return child
 
+    def is_terminal(self):
+        return (self.state.board.get_moves((self.state.y, self.state.x)) == [])
+
 
 class MCTS(object):
     ''' Runs a single MCTS from current position on board '''
