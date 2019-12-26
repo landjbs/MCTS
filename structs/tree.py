@@ -45,7 +45,7 @@ class Node(object):
 
     def rollout(self):
         curState = self.state
-        moves = self.state.board.
+        moves = self.state.possible_moves()
 
 class MCTS(object):
     ''' Runs a single MCTS from current position on board '''
