@@ -1,3 +1,9 @@
+class Node(object):
+    ''' Node Monte Carlo Tree Search '''
+
+
+
+
 class MCTS(object):
     ''' Runs a single MCTS from current position on board '''
     def __init__(self, loc, board):
