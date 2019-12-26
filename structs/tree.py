@@ -39,6 +39,7 @@ class Node(object):
         nextState = self.state.move((a[0], a[1]))
         child = Node(state=nextState, parent=self)
         self.children.append(child)
+        return child
 
 
 class MCTS(object):
