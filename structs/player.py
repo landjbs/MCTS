@@ -26,19 +26,24 @@ class Player(object):
 
     def gen_board_tensor(self, board):
         ''' Generates flat board tensor where everything looks like walls '''
-        out = np.zeros((1, board.size+2, board.size+2))
+        out = np.zeros((1, 1, board.size+2, board.size+2))
         b = board.board.copy()
         b = np.sum(b, axis=2)
-        out[0, :, :] = b.reshape((1, board.size+2, board.size+2))
+        out[0, 0, :, :] = b.reshape((1, 1, board.size+2, board.size+2))
         return torch.tensor(out, dtype=torch.float)
 
-    def gen_local_tensor(self, board):
+    def gen_board_tensor(self, board):
         ''' Generates 4th order tensor of area around self '''
-        out = np.zeros((3, 3))
+        out = np.zeros((1, 4, 3, 3))
         b = board.board.copy()
-        # TODO: finish
-        return None
+        b[self.y, self.x, 2] = 0
+        xMin, xMax = self.x - 1, self.x + 2
+        yMin, yMax = self.y - 1, self.y + 2
+        b = b[xMin:xMax, yMin:yMax, :3]
+        out[0, :3, :, :] = b
+        out[0, 3, 0, 0] = 1
 
+        return torch.tensor(out, dtype=torch.float)
 
     def move(self, dx, dy, board):
         nX, nY = self.x + dx, self.y + dy
@@ -48,9 +53,6 @@ class Player(object):
 
     def shoot(self, d, board):
         board.add_shot((self.y, self.x), d)
-
-    def possible_moves(self, board):
-        return board.get_moves((self.x, self.y))
 
     def is_dead(self, board):
         ''' Player checks if it is on laser or wall '''
@@ -62,6 +64,8 @@ class Player(object):
             return False
         if isinstance(self.controller, Bot):
             board = self.gen_board_tensor(board)
+            # plt.imshow(board[0, :3, :, :])
+            # plt.show()
         moveChoice = self.controller.choose_move(moveList, board)
         return moveChoice
 

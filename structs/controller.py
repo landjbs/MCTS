@@ -49,18 +49,27 @@ class Bot(Controller):
         moveGuess = np.random.randint(0, len(validMoves))
         moves = [(-1, -1), (0, -1), (1, -1), (-1, 0),
                  (1, 0), (-1, 1), (0, 1), (1, 1)]
+        if (1, 1) in validMoves:
+            pY = moves.index((1, 1))
+        elif (-1, -1) in validMoves:
+            pY = moves.index((-1, -1))
+        elif (0, 1) in validMoves:
+            pY = moves.index((0, 1))
+        elif (1, 0) in validMoves:
+            pY = moves.index((1, 0))
+        else:
+            pY = moves.index(validMoves[np.random.randint(0, len(validMoves))])
         p, v = self.nn.forward(board)
         pMax = p.topk(1)[1].item()
-        if moves[pMax] in validMoves:
-            print('yes')
-            pY = pMax
-            print(moves[pMax])
-        else:
-            print('no')
-            pY = moveGuess
-        l = self.nn.eval_and_prop(p, v, pY, 0)
+        # if moves[pMax] in validMoves:
+        #     pY = pMax
+        #     print(moves[pMax])
+        # else:
+        #     pY = moveGuess
+        l = self.nn.eval_and_prop(p, v, pY, 1)
         self.lVec.append(l)
         move = moves[pMax]
+        # print(move)
         return move
 
     def choose_shot(self, board):

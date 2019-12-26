@@ -54,7 +54,7 @@ class Board(object):
 
     def get_moves(self, loc):
         ''' Returns list of possible moves from loc '''
-        x, y = loc
+        y, x = loc
         minX, maxX = x - 1, x + 2
         minY, maxY = y - 1, y + 2
         kernel = np.sum(self.board[minY:maxY, minX:maxX, 1:], axis=2)
