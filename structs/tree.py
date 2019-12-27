@@ -1,5 +1,5 @@
 '''
-Heavy inspiration from:
+Heavily inspired by:
 https://github.com/int8/monte-carlo-tree-search/blob/master/mctspy/tree/nodes.py
 '''
 
@@ -99,18 +99,17 @@ class Search(object):
         return self.root.best_child(a=0)
 
 
-
-class MCTS(object):
-    ''' Runs a single MCTS from current position on board '''
-    def __init__(self, loc, board):
-        self.loc = loc
-        self.board = board
-
-    def run_search(self):
-        moves = self.board.get_moves(self.loc)
-        while len(moves) > 0:
-            moves = self.board.get_moves(self.loc)
-
-    def choose_max(self, moveList):
-        ''' Choose moves with maximal score '''
-        pass
+# class MCTS(object):
+#     ''' Runs a single MCTS from current position on board '''
+#     def __init__(self, loc, board):
+#         self.loc = loc
+#         self.board = board
+#
+#     def run_search(self):
+#         moves = self.board.get_moves(self.loc)
+#         while len(moves) > 0:
+#             moves = self.board.get_moves(self.loc)
+#
+#     def choose_max(self, moveList):
+#         ''' Choose moves with maximal score '''
+#         pass
