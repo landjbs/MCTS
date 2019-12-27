@@ -74,6 +74,11 @@ class Search(object):
     def __init__(self, node):
         self.root = node
 
+    def tree_policy(self):
+        ''' Policy for selecting nodes for rollout '''
+        curNode = self.root
+        
+
     def choose_action(self, n):
         ''' Chooses best action for n simulations '''
         for _ in range(n):
@@ -82,8 +87,7 @@ class Search(object):
             # perform rollout and backprop action
             reward = v.rollout()
             v.backprop(reward)
-        return self.root.
-
+        return self.root.best_child(a=0)
 
 
 
