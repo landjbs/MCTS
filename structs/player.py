@@ -34,7 +34,6 @@ class Player(object):
         b = b[xMin:xMax, yMin:yMax, :3]
         out[0, :3, :, :] = b
         out[0, 3, 0, 0] = 1
-
         return torch.tensor(out, dtype=torch.float)
 
     def move(self, dx, dy, board):
@@ -55,7 +54,7 @@ class Player(object):
         if moveList != []:
             return moveList
         else:
-            return None 
+            return None
 
     def choose_move(self, board):
         moveList = board.get_moves((self.y, self.x))

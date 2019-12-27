@@ -22,6 +22,10 @@ class Node(object):
             self.unexplored = self.state.possible_moves()
         return self.unexplored
 
+    def fully_explored(self):
+        ''' Checks if current state is fully explored '''
+        return (len(self.unexplored)==0)
+
     def q(self):
         ''' Calcs q value of current state '''
         wins = self.results[self.parent.state.pId]
@@ -77,7 +81,9 @@ class Search(object):
     def tree_policy(self):
         ''' Policy for selecting nodes for rollout '''
         curNode = self.root
-        
+        while (self.node.possible_moves != None):
+
+
 
     def choose_action(self, n):
         ''' Chooses best action for n simulations '''
