@@ -35,7 +35,7 @@ class Node(object):
     def expand(self):
         ''' Expand state '''
         a = self.unexplored.pop()
-        nextState = self.state.move((a[0], a[1]))
+        nextState = self.state.move(a[0], a[1])
         child = Node(state=nextState, parent=self)
         self.children.append(child)
         return child
@@ -51,7 +51,9 @@ class Node(object):
         curState = self.state
         moves = self.state.possible_moves()
         while (len(moves) < 0):
-            a =
+            a = self.policy(moves)
+            curState = curState.move(a[0], a[1])
+            moves = curState.possible_moves()
 
 
 class MCTS(object):
