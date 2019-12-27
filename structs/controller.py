@@ -2,6 +2,7 @@ import numpy as np
 from structs.models.conv import Conv
 from structs.models.tree import Node, Search
 
+
 class Controller(object):
     def __init__(self, name):
         self.name = name
@@ -44,7 +45,7 @@ class Bot(Controller):
         self.nn = Conv(lr)
         self.lVec = []
 
-    def choose_move(self, validMoves, board):
+    def conv_choose_move(self, validMoves, board):
         # i = np.random.randint(0, len(moveList))
         # return moveList[i]
         moveGuess = np.random.randint(0, len(validMoves))
@@ -72,6 +73,9 @@ class Bot(Controller):
         move = moves[pMax]
         # print(move)
         return move
+
+    def choose_move(self, validMoves, board):
+        
 
     def choose_shot(self, board):
         # i = np.random.randint(0, 5)
