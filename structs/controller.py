@@ -75,7 +75,8 @@ class Bot(Controller):
         return move
 
     def choose_move(self, player):
-        root = Node(state=player)
+        # root = Node(state=player, )
+        pass
 
     def choose_shot(self, board):
         # i = np.random.randint(0, 5)
