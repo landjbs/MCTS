@@ -58,6 +58,10 @@ class Node(object):
 
     def backprop(self, r):
         ''' Backprops result r through tree '''
+        self.visitNum += 1
+        self.results[r] += 1
+        if self.parent:
+            self.parent.backprop(r)
 
 
 class MCTS(object):
