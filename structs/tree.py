@@ -45,7 +45,7 @@ class Node(object):
 
     def policy(self, moves):
         ''' Policy for selecting move from moves during rollout '''
-
+        return moves[np.random.randint(0, len(moves))]
 
     def rollout(self):
         curState = self.state
