@@ -40,9 +40,6 @@ class Node(object):
         self.children.append(child)
         return child
 
-    # def is_terminal(self):
-    #     return self.
-
     def policy(self, moves):
         ''' Policy for selecting move from moves during rollout '''
         return moves[np.random.randint(0, len(moves))]
