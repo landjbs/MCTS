@@ -48,12 +48,16 @@ class Node(object):
         return moves[np.random.randint(0, len(moves))]
 
     def rollout(self):
+        ''' Performs rollout from current state until leaf is reached '''
         curState = self.state
         moves = self.state.possible_moves()
         while (len(moves) < 0):
             a = self.policy(moves)
             curState = curState.move(a[0], a[1])
             moves = curState.possible_moves()
+
+    def backprop(self, r):
+        ''' Backprops result r through tree '''
 
 
 class MCTS(object):
