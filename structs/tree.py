@@ -60,6 +60,14 @@ class Node(object):
         if self.parent:
             self.parent.backprop(r)
 
+    def best_child(self, a=1.4):
+        ''' Chooses best child in children list using formula and param a '''
+        # pick weights for children
+        weights = [(c.q / c.n) + a * np.sqrt((2 * np.log(self.n) / c.n))
+                    for c in self.children]
+        # choose best child
+        return self.children(np.max(weights))
+
 
 class Search(object):
     ''' Runs search of MCTS built from nodes '''
@@ -74,6 +82,7 @@ class Search(object):
             # perform rollout and backprop action
             reward = v.rollout()
             v.backprop(reward)
+        return self.root.
 
 
 
