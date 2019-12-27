@@ -1,5 +1,6 @@
 import numpy as np
-from structs.models import Conv
+from structs.models.conv import Conv
+from structs.models.tree import Node, Search
 
 class Controller(object):
     def __init__(self, name):
