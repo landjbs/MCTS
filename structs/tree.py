@@ -82,8 +82,11 @@ class Search(object):
         ''' Policy for selecting nodes for rollout '''
         curNode = self.root
         while (self.node.possible_moves != None):
-
-
+            if not curNode.fully_explored():
+                return curNode.expand()
+            else:
+                curNode = curNode.best_child()
+        return curNode
 
     def choose_action(self, n):
         ''' Chooses best action for n simulations '''
