@@ -66,7 +66,15 @@ class Search(object):
     def __init__(self, node):
         self.root = node
 
-    def choose_action(self, )
+    def choose_action(self, n):
+        ''' Chooses best action for n simulations '''
+        for _ in range(n):
+            # choose node
+            v = self.tree_policy()
+            # perform rollout and backprop action
+            reward = v.rollout()
+            v.backprop(reward)
+
 
 
 
