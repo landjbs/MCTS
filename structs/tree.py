@@ -61,6 +61,13 @@ class Node(object):
             self.parent.backprop(r)
 
 
+class Search(object):
+    ''' Runs search of MCTS built from nodes '''
+    def __init__(self,):
+        pass
+
+
+
 class MCTS(object):
     ''' Runs a single MCTS from current position on board '''
     def __init__(self, loc, board):
