@@ -3,7 +3,7 @@ Heavy inspiration from:
 https://github.com/int8/monte-carlo-tree-search/blob/master/mctspy/tree/nodes.py
 '''
 
-
+import numpy as np
 from collections import defaultdict
 
 class Node(object):
@@ -43,9 +43,16 @@ class Node(object):
     # def is_terminal(self):
     #     return self.
 
+    def policy(self, moves):
+        ''' Policy for selecting move from moves during rollout '''
+
+
     def rollout(self):
         curState = self.state
         moves = self.state.possible_moves()
+        while (len(moves) < 0):
+            a =
+
 
 class MCTS(object):
     ''' Runs a single MCTS from current position on board '''
