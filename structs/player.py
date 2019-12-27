@@ -57,14 +57,14 @@ class Player(object):
             return None
 
     def choose_move(self, board):
-        moveList = board.get_moves((self.y, self.x))
-        if len(moveList)==0:
-            return False
-        if isinstance(self.controller, Bot):
-            board = self.gen_board_tensor(board)
-            # plt.imshow(board[0, :3, :, :])
-            # plt.show()
-        moveChoice = self.controller.choose_move(moveList, board)
+        # moveList = board.get_moves((self.y, self.x))
+        # if len(moveList)==0:
+        #     return False
+        # if isinstance(self.controller, Bot):
+        #     board = self.gen_board_tensor(board)
+        #     # plt.imshow(board[0, :3, :, :])
+        #     # plt.show()
+        moveChoice = self.controller.choose_move(self)
         return moveChoice
 
     def choose_shot(self, board):

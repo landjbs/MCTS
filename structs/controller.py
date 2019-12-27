@@ -7,7 +7,7 @@ class Controller(object):
     def __init__(self, name):
         self.name = name
 
-    def choose_move(self, moveList, board):
+    def choose_move(self, player):
         pass
 
     def choose_shot(self, board):
@@ -19,7 +19,7 @@ class Human(Controller):
     def __init__(self, name):
         super(Human, self).__init__(name)
 
-    def choose_move(self, moveList, board):
+    def choose_move(self, player):
         pass
 
     def choose_shot(self, board):
@@ -31,7 +31,7 @@ class Dummy(Controller):
     def __init__(self, name):
         super(Dummy, self).__init__(name)
 
-    def choose_move(self, moveList, board):
+    def choose_move(self, player):
         return (0, 0)
 
     def choose_shot(self, board):
@@ -74,8 +74,8 @@ class Bot(Controller):
         # print(move)
         return move
 
-    def choose_move(self, validMoves, board):
-        
+    def choose_move(self, player):
+        root = Node(state=player)
 
     def choose_shot(self, board):
         # i = np.random.randint(0, 5)
