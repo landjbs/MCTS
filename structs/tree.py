@@ -63,8 +63,10 @@ class Node(object):
 
 class Search(object):
     ''' Runs search of MCTS built from nodes '''
-    def __init__(self,):
-        pass
+    def __init__(self, node):
+        self.root = node
+
+    def choose_action(self, )
 
 
 
